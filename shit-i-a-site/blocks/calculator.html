@@ -1,0 +1,68 @@
+<section id="calculator" class="scroll-mt-24 max-w-lg mx-auto py-16 px-4 text-center">
+  <button type="button"
+          onclick="const b=document.getElementById('calc-box'); b.classList.toggle('scale-0'); b.classList.toggle('opacity-0'); b.classList.toggle('max-h-0'); b.classList.toggle('p-0'); b.classList.toggle('p-6');"
+          class="btn-primary-3d px-8 py-4 text-base inline-flex items-center gap-3">
+    <i data-lucide="calculator" class="w-5 h-5"></i>
+    <span>Рассчитать стоимость услуг</span>
+  </button>
+
+  <div id="calc-box"
+       class="glass-card rounded-2xl border border-sky-400/40 shadow-2xl mt-6 text-left origin-bottom transition-all duration-500 overflow-hidden scale-0 opacity-0 max-h-0 p-0">
+    <div class="flex justify-between items-center mb-5">
+      <span class="font-mono-tech text-xs uppercase tracking-widest text-sky-400">Калькулятор ООО «Щит и А»</span>
+      <button type="button"
+              onclick="const b=document.getElementById('calc-box'); b.classList.add('scale-0','opacity-0','max-h-0','p-0'); b.classList.remove('p-6');"
+              class="text-slate-400 hover:text-white">✕</button>
+    </div>
+
+    <div class="space-y-4">
+      <div>
+        <div class="flex justify-between text-sm mb-1">
+          <span class="text-slate-300">Площадь объекта</span>
+          <span id="v-area" class="font-mono-tech font-bold text-sky-400">100 м²</span>
+        </div>
+        <input id="r-area" type="range" min="20" max="500" step="10" value="100"
+               oninput="calcTotal()" class="w-full accent-sky-400 cursor-pointer" />
+      </div>
+
+      <div>
+        <div class="flex justify-between text-sm mb-1">
+          <span class="text-slate-300">Количество комнат / зон</span>
+          <span id="v-rooms" class="font-mono-tech font-bold text-sky-400">3</span>
+        </div>
+        <input id="r-rooms" type="range" min="1" max="15" step="1" value="3"
+               oninput="calcTotal()" class="w-full accent-sky-400 cursor-pointer" />
+      </div>
+
+      <div>
+        <div class="flex justify-between text-sm mb-1">
+          <span class="text-slate-300">Посты охраны / камеры</span>
+          <span id="v-posts" class="font-mono-tech font-bold text-sky-400">1</span>
+        </div>
+        <input id="r-posts" type="range" min="0" max="10" step="1" value="1"
+               oninput="calcTotal()" class="w-full accent-sky-400 cursor-pointer" />
+      </div>
+
+      <div class="pt-4 border-t border-sky-500/20 flex items-center justify-between">
+        <div>
+          <div class="text-xs text-slate-400">Итого в месяц:</div>
+          <div id="v-total" class="font-mono-tech text-2xl font-extrabold text-sky-400">11 500 ₽</div>
+        </div>
+        <a href="#contact" class="btn-primary-3d px-5 py-2.5 text-sm">Оставить заявку</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function calcTotal() {
+    const a = Number(document.getElementById('r-area').value);
+    const r = Number(document.getElementById('r-rooms').value);
+    const p = Number(document.getElementById('r-posts').value);
+    document.getElementById('v-area').textContent = a + ' м²';
+    document.getElementById('v-rooms').textContent = r;
+    document.getElementById('v-posts').textContent = p;
+    const sum = 3000 + (a * 25) + (r * 500) + (p * 4500);
+    document.getElementById('v-total').textContent = sum.toLocaleString('ru-RU') + ' ₽';
+  }
+</script>

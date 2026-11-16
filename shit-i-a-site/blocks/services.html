@@ -1,0 +1,155 @@
+<section id="services" class="scroll-mt-24 max-w-7xl mx-auto py-16 px-6">
+  <h2 class="text-3xl md:text-4xl font-extrabold text-white text-center uppercase tracking-wider mb-8">Услуги</h2>
+
+  <!-- Переключатель во всю ширину -->
+  <div class="grid grid-cols-2 rounded-xl overflow-hidden border border-sky-500/30 mb-10">
+    <button id="btn-jur" type="button"
+            onclick="document.getElementById('list-jur').classList.remove('hidden'); document.getElementById('list-phy').classList.add('hidden'); this.className='py-4 px-6 font-bold text-sm md:text-base uppercase tracking-wide bg-sky-500 text-white transition-all'; document.getElementById('btn-phy').className='py-4 px-6 font-bold text-sm md:text-base uppercase tracking-wide bg-slate-900/90 text-slate-300 hover:text-white transition-all';"
+            class="py-4 px-6 font-bold text-sm md:text-base uppercase tracking-wide bg-sky-500 text-white transition-all">
+      Юридическим лицам
+    </button>
+    <button id="btn-phy" type="button"
+            onclick="document.getElementById('list-phy').classList.remove('hidden'); document.getElementById('list-jur').classList.add('hidden'); this.className='py-4 px-6 font-bold text-sm md:text-base uppercase tracking-wide bg-sky-500 text-white transition-all'; document.getElementById('btn-jur').className='py-4 px-6 font-bold text-sm md:text-base uppercase tracking-wide bg-slate-900/90 text-slate-300 hover:text-white transition-all';"
+            class="py-4 px-6 font-bold text-sm md:text-base uppercase tracking-wide bg-slate-900/90 text-slate-300 hover:text-white transition-all">
+      Физическим лицам
+    </button>
+  </div>
+
+  <!-- Сетка 1: Юридическим лицам -->
+  <div id="list-jur" class="grid md:grid-cols-3 gap-6">
+    <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+      <div>
+        <i data-lucide="radio" class="w-8 h-8 text-sky-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white uppercase mb-2">Пультовая охрана</h3>
+        <p class="text-sm text-slate-300 mb-6">Круглосуточный мониторинг офисов, магазинов и складов с оперативным реагированием ГБР.</p>
+      </div>
+      <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать охрану</a>
+    </div>
+    <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+      <div>
+        <i data-lucide="bell-ring" class="w-8 h-8 text-sky-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white uppercase mb-2">Кнопка SOS</h3>
+        <p class="text-sm text-slate-300 mb-6">Экстренный вызов группы быстрого реагирования с минимальной задержкой.</p>
+      </div>
+      <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать охрану</a>
+    </div>
+    <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+      <div>
+        <i data-lucide="flame" class="w-8 h-8 text-sky-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white uppercase mb-2">Пожарная сигнализация</h3>
+        <p class="text-sm text-slate-300 mb-6">Монтаж и обслуживание современных систем пожарной безопасности с оповещением.</p>
+      </div>
+      <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать охрану</a>
+    </div>
+    <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+      <div>
+        <i data-lucide="user-check" class="w-8 h-8 text-sky-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white uppercase mb-2">Физическая охрана</h3>
+        <p class="text-sm text-slate-300 mb-6">Стационарные посты лицензированных охранников с круглосуточным присутствием.</p>
+      </div>
+      <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать охрану</a>
+    </div>
+    <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+      <div>
+        <i data-lucide="users" class="w-8 h-8 text-sky-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white uppercase mb-2">Охрана мероприятий</h3>
+        <p class="text-sm text-slate-300 mb-6">Обеспечение безопасности и правопорядка на массовых событиях с пропускным режимом.</p>
+      </div>
+      <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать охрану</a>
+    </div>
+    <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+      <div>
+        <i data-lucide="truck" class="w-8 h-8 text-sky-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white uppercase mb-2">Сопровождение грузов</h3>
+        <p class="text-sm text-slate-300 mb-6">Вооружённая охрана при перевозке ценных грузов с полным сопровождением.</p>
+      </div>
+      <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать охрану</a>
+    </div>
+  </div>
+
+  <!-- Сетка 2: Физическим лицам -->
+  <div id="list-phy" class="grid md:grid-cols-3 gap-6 hidden">
+    <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+      <div>
+        <i data-lucide="building-2" class="w-8 h-8 text-sky-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white uppercase mb-2">Охрана квартир</h3>
+        <p class="text-sm text-slate-300 mb-6">Защита от проникновения, пожара и протечек с выездом экипажа ГБР.</p>
+      </div>
+      <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать охрану</a>
+    </div>
+    <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+      <div>
+        <i data-lucide="home" class="w-8 h-8 text-sky-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white uppercase mb-2">Дома и коттеджи</h3>
+        <p class="text-sm text-slate-300 mb-6">Охрана периметра, участка и загородных домов в Улан-Удэ и районах.</p>
+      </div>
+      <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать охрану</a>
+    </div>
+    <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+      <div>
+        <i data-lucide="warehouse" class="w-8 h-8 text-sky-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white uppercase mb-2">Охрана гаражей</h3>
+        <p class="text-sm text-slate-300 mb-6">Надёжная сигнализация для гаражных боксов и стоянок автотранспорта.</p>
+      </div>
+      <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать охрану</a>
+    </div>
+    <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+      <div>
+        <i data-lucide="cctv" class="w-8 h-8 text-sky-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white uppercase mb-2">Видеонаблюдение</h3>
+        <p class="text-sm text-slate-300 mb-6">Установка камер с онлайн-доступом со смартфона из любой точки мира.</p>
+      </div>
+      <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать охрану</a>
+    </div>
+    <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+      <div>
+        <i data-lucide="smartphone" class="w-8 h-8 text-sky-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white uppercase mb-2">Мобильный телохранитель</h3>
+        <p class="text-sm text-slate-300 mb-6">Тревожная кнопка в телефоне для защиты детей и пожилых родственников.</p>
+      </div>
+      <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать охрану</a>
+    </div>
+    <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+      <div>
+        <i data-lucide="shield-alert" class="w-8 h-8 text-sky-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white uppercase mb-2">Личная охрана</h3>
+        <p class="text-sm text-slate-300 mb-6">Индивидуальное сопровождение и обеспечение личной безопасности.</p>
+      </div>
+      <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать охрану</a>
+    </div>
+  </div>
+  <!-- Консультации -->
+  <section id="consultations" class="scroll-mt-24 max-w-7xl mx-auto py-16 px-6">
+    <h2 class="text-3xl md:text-4xl font-extrabold text-white text-center uppercase tracking-wider mb-8">Консультации</h2>
+    
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+        <div>
+          <i data-lucide="user-check" class="w-8 h-8 text-sky-400 mb-4"></i>
+          <h3 class="text-xl font-bold text-white uppercase mb-2">Бесплатная консультация</h3>
+          <p class="text-sm text-slate-300 mb-6">Получите бесплатную консультацию по вопросам охраны и безопасности.</p>
+        </div>
+        <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать консультацию</a>
+      </div>
+      
+      <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+        <div>
+          <i data-lucide="shield-check" class="w-8 h-8 text-sky-400 mb-4"></i>
+          <h3 class="text-xl font-bold text-white uppercase mb-2">Аудит безопасности</h3>
+          <p class="text-sm text-slate-300 mb-6">Проведем аудит безопасности вашего объекта и дадим рекомендации.</p>
+        </div>
+        <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать аудит</a>
+      </div>
+      
+      <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+        <div>
+          <i data-lucide="file-text" class="w-8 h-8 text-sky-400 mb-4"></i>
+          <h3 class="text-xl font-bold text-white uppercase mb-2">Сопровождение документов</h3>
+          <p class="text-sm text-slate-300 mb-6">Поможем с оформлением лицензий и разрешений на охранные услуги.</p>
+        </div>
+        <a href="#contact" class="btn-primary-3d py-3 px-5 text-center text-sm">Заказать документы</a>
+      </div>
+    </div>
+  </section>
+
+</section>

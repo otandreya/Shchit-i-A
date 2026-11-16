@@ -1,0 +1,197 @@
+<header id="main-header" class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-sky-500/20">
+  <style>
+    /* Плавное выезжающее меню для ПК (шире 768px) */
+    .sh-desktop-wrap {
+      display: none;
+      position: relative;
+    }
+    .sh-desktop-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px;
+      border-radius: 10px;
+      background: linear-gradient(160deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #f8fafc;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.18);
+      transition: all 0.25s ease;
+    }
+    .sh-desktop-wrap:hover .sh-desktop-btn {
+      border-color: #38bdf8;
+      background: linear-gradient(160deg, rgba(36, 50, 74, 0.98) 0%, rgba(14, 165, 233, 0.22) 100%);
+      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35);
+    }
+    .sh-desktop-arrow {
+      transition: transform 0.3s ease;
+    }
+    .sh-desktop-wrap:hover .sh-desktop-arrow {
+      transform: rotate(180deg);
+    }
+    /* Выезжающая панель вниз при наведении */
+    .sh-desktop-dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: 250px;
+      padding: 10px;
+      border-radius: 14px;
+      background: linear-gradient(165deg, rgba(15, 23, 42, 0.97) 0%, rgba(12, 20, 38, 0.99) 100%);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.85);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-14px) scaleY(0.92);
+      transform-origin: top center;
+      transition: opacity 0.28s ease, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s;
+      z-index: 100;
+    }
+    /* Невидимый мостик между кнопкой и меню, чтобы список не закрывался при переводе мышки */
+    .sh-desktop-dropdown::before {
+      content: "";
+      position: absolute;
+      top: -12px;
+      left: 0;
+      right: 0;
+      height: 12px;
+    }
+    .sh-desktop-wrap:hover .sh-desktop-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scaleY(1);
+    }
+    .sh-desktop-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 9px;
+      color: #e2e8f0;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .sh-desktop-link:hover {
+      background: rgba(56, 189, 248, 0.14);
+      color: #38bdf8;
+      transform: translateX(4px);
+    }
+
+    /* Мобильная кнопка и меню (до 768px) */
+    .sh-mobile-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+      cursor: pointer;
+    }
+    .sh-mobile-drawer {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, padding 0.3s ease;
+      padding: 0 16px;
+      background: rgba(12, 20, 38, 0.98);
+      border-top: 1px solid transparent;
+    }
+    .sh-mobile-drawer.is-open {
+      max-height: 360px;
+      opacity: 1;
+      padding: 16px;
+      border-top-color: rgba(56, 189, 248, 0.2);
+    }
+
+    @media (min-width: 769px) {
+      .sh-desktop-wrap {
+        display: block;
+      }
+      .sh-mobile-btn,
+      .sh-mobile-drawer {
+        display: none !important;
+      }
+    }
+  </style>
+
+  <!-- Верхняя полоска контактов -->
+  <div class="border-b border-slate-800/50 py-2 px-4 text-xs text-slate-300">
+    <div class="max-w-7xl mx-auto flex justify-between items-center gap-2">
+      <a href="tel:+73012000000" class="flex items-center gap-3 text-white font-semibold">
+        <i data-lucide="phone" class="w-4 h-4 text-sky-400"></i>
+        <span>+7 (3012) 00-00-00</span>
+      </a>
+      <span class="hidden sm:flex items-center gap-3">
+        <i data-lucide="map-pin" class="w-4 h-4 text-sky-400"></i>
+        <span>Республика Бурятия, г. Улан-Удэ</span>
+      </span>
+      <a href="mailto:info@shit-i-a.ru" class="flex items-center gap-3 text-slate-300 hover:text-sky-400">
+        <i data-lucide="mail" class="w-4 h-4 text-sky-400"></i>
+        <span>info@shit-i-a.ru</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Основная панель навигации -->
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3 text-white font-extrabold text-lg md:text-xl tracking-wide">
+      <i data-lucide="shield" class="w-7 h-7 text-sky-400"></i>
+      <span>ООО «Щит и А»</span>
+    </a>
+
+    <!-- Прямоугольная кнопка меню для ПК (плавно выезжает при наведении) -->
+    <div class="sh-desktop-wrap">
+      <button type="button" class="sh-desktop-btn">
+        <span>Меню</span>
+        <i data-lucide="chevron-down" class="w-4 h-4 text-sky-400 sh-desktop-arrow"></i>
+      </button>
+
+      <div class="sh-desktop-dropdown">
+        <a href="#services" class="sh-desktop-link">
+          <i data-lucide="shield-check" class="w-4 h-4 text-sky-400"></i>
+          <span>Услуги охраны</span>
+        </a>
+        <a href="#calculator" class="sh-desktop-link">
+          <i data-lucide="calculator" class="w-4 h-4 text-sky-400"></i>
+          <span>Калькулятор</span>
+        </a>
+        <a href="#contact" class="sh-desktop-link">
+          <i data-lucide="phone-call" class="w-4 h-4 text-sky-400"></i>
+          <span>Контакты</span>
+        </a>
+        <div class="pt-4 mt-2 border-t border-slate-700/50">
+          <a href="#contact" class="btn-primary-3d block w-full py-2.5 px-4 rounded-lg text-center text-sm font-semibold text-white">
+            Задать вопрос
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Кнопка мобильного меню для смартфона и планшета (только по клику) -->
+    <button type="button"
+            onclick="document.getElementById('mobile-menu').classList.toggle('is-open')"
+            class="sh-mobile-btn"
+            aria-label="Открыть меню">
+      <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+
+  <!-- Выдвижное мобильное меню (по клику) -->
+  <div id="mobile-menu" class="sh-mobile-drawer space-y-3">
+    <div class="text-xs text-slate-400 flex items-center gap-3 pb-4 border-b border-slate-700/50">
+      <i data-lucide="map-pin" class="w-4 h-4 text-sky-400"></i>
+      <span>Республика Бурятия, г. Улан-Удэ</span>
+    </div>
+    <a href="#services" onclick="document.getElementById('mobile-menu').classList.remove('is-open')" class="block py-2 text-base font-semibold text-white hover:text-sky-400">Услуги</a>
+    <a href="#calculator" onclick="document.getElementById('mobile-menu').classList.remove('is-open')" class="block py-2 text-base font-semibold text-white hover:text-sky-400">Калькулятор</a>
+    <a href="#contact" onclick="document.getElementById('mobile-menu').classList.remove('is-open')" class="block py-2 text-base font-semibold text-white hover:text-sky-400">Контакты</a>
+    <a href="#contact" onclick="document.getElementById('mobile-menu').classList.remove('is-open')" class="btn-primary-3d block w-full py-3 rounded-xl text-center text-sm font-semibold text-white">Задать вопрос</a>
+  </div>
+</header>
