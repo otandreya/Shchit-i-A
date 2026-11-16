@@ -1,0 +1,253 @@
+/* Основные стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    text-align: center;
+    color: #1e3c72;
+    margin-bottom: 30px;
+    font-size: 2.2rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Группы элементов управления */
+.control-group {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: linear-gradient(to right, #e3f2fd, #bbdefb);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #1e3c72;
+    font-size: 1.1rem;
+}
+
+/* Радио-кнопки */
+.radio-label {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #2a5298;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.radio-label:hover {
+    background: rgba(30, 60, 114, 0.1);
+}
+
+.radio-label input[type="radio"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+
+/* Селекты */
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #1e3c72;
+    border-radius: 8px;
+    background: white;
+    font-size: 1rem;
+    color: #1e3c72;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+select:hover {
+    border-color: #2a5298;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Слайдер */
+input[type="range"] {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border: 2px solid #1e3c72;
+}
+
+/* Чекбоксы */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+    color: #2a5298;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    background: rgba(30, 60, 114, 0.05);
+}
+
+.checkbox-label:hover {
+    background: rgba(30, 60, 114, 0.1);
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+
+/* Группы параметров */
+.params-group {
+    display: none;
+}
+
+.params-group.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Результат */
+.result {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    background: linear-gradient(to right, #e3f2fd, #bbdefb);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.result p:first-child {
+    font-size: 1.1rem;
+    color: #1e3c72;
+    margin-bottom: 10px;
+}
+
+#costResult {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1e3c72;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Кнопка расчета */
+#calculateBtn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(30, 60, 114, 0.3);
+}
+
+#calculateBtn:hover {
+    background: linear-gradient(to right, #2a5298, #1e3c72);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(30, 60, 114, 0.4);
+}
+
+#calculateBtn:active {
+    transform: translateY(0);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .control-group {
+        padding: 15px;
+    }
+    
+    .radio-label {
+        display: block;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
+    .checkbox-group {
+        flex-direction: column;
+    }
+    
+    #costResult {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .container {
+        padding: 15px;
+    }
+    
+    #calculateBtn {
+        padding: 12px;
+        font-size: 1rem;
+    }
+}
