@@ -1,5 +1,63 @@
 <header id="main-header" class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-sky-500/20">
   <style>
+    /* Плавные переходы шапки при скролле */
+    #main-header {
+      transition: background-color 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+    #main-header.is-scrolled {
+      background-color: rgba(8, 14, 28, 0.96);
+      border-bottom-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.75);
+    }
+
+    /* Верхняя полоска контактов — плавно уезжает вверх при скролле */
+    .sh-topbar {
+      max-height: 44px;
+      opacity: 1;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.25s ease,
+                  padding-top 0.35s ease,
+                  padding-bottom 0.35s ease,
+                  border-color 0.3s ease;
+    }
+    #main-header.is-scrolled .sh-topbar {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      border-bottom-color: transparent;
+    }
+
+    /* Основная панель навигации — уменьшается по высоте при скролле */
+    .sh-nav-bar {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      transition: padding-top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  padding-bottom 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #main-header.is-scrolled .sh-nav-bar {
+      padding-top: 7px;
+      padding-bottom: 7px;
+    }
+
+    /* Логотип слева — плавно увеличивается при скролле */
+    .sh-brand-logo {
+      transform-origin: left center;
+      transform: scale(1);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  text-shadow 0.35s ease;
+    }
+    #main-header.is-scrolled .sh-brand-logo {
+      transform: scale(1.18);
+      text-shadow: 0 0 18px rgba(56, 189, 248, 0.45);
+    }
+    @media (max-width: 768px) {
+      #main-header.is-scrolled .sh-brand-logo {
+        transform: scale(1.12);
+      }
+    }
+
     /* Плавное выезжающее меню для ПК (шире 768px) */
     .sh-desktop-wrap {
       display: none;
@@ -21,6 +79,10 @@
       box-shadow: 0 4px 14px rgba(2, 132, 199, 0.18);
       transition: all 0.25s ease;
     }
+    #main-header.is-scrolled .sh-desktop-btn {
+      padding: 6px 16px;
+      font-size: 13px;
+    }
     .sh-desktop-wrap:hover .sh-desktop-btn {
       border-color: #38bdf8;
       background: linear-gradient(160deg, rgba(36, 50, 74, 0.98) 0%, rgba(14, 165, 233, 0.22) 100%);
@@ -32,7 +94,6 @@
     .sh-desktop-wrap:hover .sh-desktop-arrow {
       transform: rotate(180deg);
     }
-    /* Выезжающая панель вниз при наведении */
     .sh-desktop-dropdown {
       position: absolute;
       top: calc(100% + 10px);
@@ -51,7 +112,6 @@
       transition: opacity 0.28s ease, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s;
       z-index: 100;
     }
-    /* Невидимый мостик между кнопкой и меню, чтобы список не закрывался при переводе мышки */
     .sh-desktop-dropdown::before {
       content: "";
       position: absolute;
@@ -93,6 +153,10 @@
       border: 1px solid rgba(56, 189, 248, 0.35);
       color: #38bdf8;
       cursor: pointer;
+      transition: padding 0.3s ease;
+    }
+    #main-header.is-scrolled .sh-mobile-btn {
+      padding: 6px 10px;
     }
     .sh-mobile-drawer {
       max-height: 0;
@@ -121,8 +185,8 @@
     }
   </style>
 
-  <!-- Верхняя полоска контактов -->
-  <div class="border-b border-slate-800/50 py-2 px-4 text-xs text-slate-300">
+  <!-- Верхняя полоска контактов (плавно сворачивается при скролле) -->
+  <div class="sh-topbar border-b border-slate-800/50 py-2 px-4 text-xs text-slate-300">
     <div class="max-w-7xl mx-auto flex justify-between items-center gap-2">
       <a href="tel:+73012000000" class="flex items-center gap-3 text-white font-semibold">
         <i data-lucide="phone" class="w-4 h-4 text-sky-400"></i>
@@ -140,13 +204,13 @@
   </div>
 
   <!-- Основная панель навигации -->
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-    <a href="#" class="flex items-center gap-3 text-white font-extrabold text-lg md:text-xl tracking-wide">
+  <div class="sh-nav-bar max-w-7xl mx-auto px-4 flex items-center justify-between">
+    <a href="#" class="sh-brand-logo flex items-center gap-3 text-white font-extrabold text-lg md:text-xl tracking-wide">
       <i data-lucide="shield" class="w-7 h-7 text-sky-400"></i>
       <span>ООО «Щит и А»</span>
     </a>
 
-    <!-- Прямоугольная кнопка меню для ПК (плавно выезжает при наведении) -->
+    <!-- Прямоугольная кнопка меню для ПК -->
     <div class="sh-desktop-wrap">
       <button type="button" class="sh-desktop-btn">
         <span>Меню</span>
@@ -174,7 +238,7 @@
       </div>
     </div>
 
-    <!-- Кнопка мобильного меню для смартфона и планшета (только по клику) -->
+    <!-- Кнопка мобильного меню для смартфона и планшета -->
     <button type="button"
             onclick="document.getElementById('mobile-menu').classList.toggle('is-open')"
             class="sh-mobile-btn"
@@ -183,7 +247,7 @@
     </button>
   </div>
 
-  <!-- Выдвижное мобильное меню (по клику) -->
+  <!-- Выдвижное мобильное меню -->
   <div id="mobile-menu" class="sh-mobile-drawer space-y-3">
     <div class="text-xs text-slate-400 flex items-center gap-3 pb-4 border-b border-slate-700/50">
       <i data-lucide="map-pin" class="w-4 h-4 text-sky-400"></i>
@@ -194,4 +258,26 @@
     <a href="#contact" onclick="document.getElementById('mobile-menu').classList.remove('is-open')" class="block py-2 text-base font-semibold text-white hover:text-sky-400">Контакты</a>
     <a href="#contact" onclick="document.getElementById('mobile-menu').classList.remove('is-open')" class="btn-primary-3d block w-full py-3 rounded-xl text-center text-sm font-semibold text-white">Задать вопрос</a>
   </div>
+
+    <script>
+    (function () {
+      const header = document.getElementById('main-header');
+      if (!header) return;
+      let isCompact = false;
+
+      function onScrollHeader() {
+        const y = window.scrollY;
+        if (!isCompact && y > 80) {
+          isCompact = true;
+          header.classList.add('is-scrolled');
+        } else if (isCompact && y < 15) {
+          isCompact = false;
+          header.classList.remove('is-scrolled');
+        }
+      }
+
+      window.addEventListener('scroll', onScrollHeader, { passive: true });
+      onScrollHeader();
+    })();
+  </script>
 </header>

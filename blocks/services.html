@@ -1,5 +1,148 @@
 <section id="services" class="scroll-mt-24 max-w-7xl mx-auto py-16 px-6">
-  <h2 class="text-3xl md:text-4xl font-extrabold text-white text-center uppercase tracking-wider mb-8">Услуги</h2>
+  <div style="text-align: center; margin-bottom: 44px; padding-top: 8px;">
+ <div id="guarantee-title-box" style="text-align: center; margin-bottom: 48px; padding-top: 10px; overflow: hidden;">
+  <style>
+    .sh-wave-heading {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(26px, 4.2vw, 44px);
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin: 0 0 14px 0;
+      line-height: 1.2;
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .sh-wave-char {
+      display: inline-block;
+      will-change: transform, opacity;
+      transition: transform 0.14s ease-out, opacity 0.14s ease-out;
+    }
+    .sh-wave-accent {
+      color: #38bdf8;
+      text-shadow: 0 0 24px rgba(56, 189, 248, 0.4);
+    }
+    .sh-wave-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #94a3b8;
+      letter-spacing: 0.04em;
+      margin: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+  </style>
+
+  <h2 id="guarantee-wave-title" class="sh-wave-heading" aria-label="Мы гарантируем"></h2>
+  <p id="guarantee-wave-sub" class="sh-wave-sub">
+    Охранные услуги, ГБР и монтаж сигнализации в Улан-Удэ и Бурятии
+  </p>
+
+  <script>
+    (function () {
+      const box = document.getElementById('guarantee-title-box');
+      const title = document.getElementById('guarantee-wave-title');
+      const sub = document.getElementById('guarantee-wave-sub');
+      if (!box || !title) return;
+
+      const words = [
+        { text: 'Мы', accent: false },
+        { text: ' ', accent: false },
+        { text: 'гарантируем', accent: true }
+      ];
+
+      // Разлёт букв в разные стороны с плавной волной
+      const offsets = [
+        { x: -75, y: -45, r: -18 },
+        { x: -35, y: 50,  r: 14 },
+        { x: 0,   y: 0,   r: 0 },
+        { x: 40,  y: -55, r: 16 },
+        { x: -50, y: 45,  r: -14 },
+        { x: 65,  y: -35, r: 20 },
+        { x: -30, y: -50, r: -12 },
+        { x: 55,  y: 48,  r: 15 },
+        { x: -65, y: -30, r: -16 },
+        { x: 35,  y: 52,  r: 12 },
+        { x: 75,  y: -42, r: -19 },
+        { x: -40, y: 46,  r: 14 },
+        { x: 60,  y: -48, r: -15 },
+        { x: 85,  y: 38,  r: 18 }
+      ];
+
+      let charIndex = 0;
+      const chars = [];
+
+      words.forEach((word) => {
+        if (word.text === ' ') {
+          const space = document.createElement('span');
+          space.innerHTML = '&nbsp;';
+          space.style.width = '0.32em';
+          space.style.display = 'inline-block';
+          title.appendChild(space);
+          charIndex++;
+          return;
+        }
+        const wordWrap = document.createElement('span');
+        wordWrap.style.display = 'inline-block';
+        wordWrap.style.whiteSpace = 'nowrap';
+
+        for (const ch of word.text) {
+          const span = document.createElement('span');
+          span.textContent = ch;
+          span.className = 'sh-wave-char' + (word.accent ? ' sh-wave-accent' : '');
+          const off = offsets[charIndex % offsets.length];
+          chars.push({ el: span, off, idx: charIndex });
+          wordWrap.appendChild(span);
+          charIndex++;
+        }
+        title.appendChild(wordWrap);
+      });
+
+      function updateWaveOnScroll() {
+        const rect = box.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        // Прогресс от 0 (заголовок только появился снизу экрана) до 1 (поднялся выше середины экрана)
+        const start = vh * 0.96;
+        const end = vh * 0.52;
+        const rawProgress = (start - rect.top) / (start - end);
+        const baseProgress = Math.max(0, Math.min(1, rawProgress));
+
+        chars.forEach((item) => {
+          // Сдвиг по времени для каждой буквы, чтобы сборка шла живой волной
+          const waveDelay = (item.idx / chars.length) * 0.28;
+          const localP = Math.max(0, Math.min(1, (baseProgress - waveDelay) / (1 - waveDelay)));
+          // Плавное замедление в конце (easeOutCubic)
+          const eased = 1 - Math.pow(1 - localP, 3);
+          const inv = 1 - eased;
+
+          const tx = (item.off.x * inv).toFixed(1);
+          const ty = (item.off.y * inv).toFixed(1);
+          const rot = (item.off.r * inv).toFixed(1);
+
+          item.el.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${rot}deg)`;
+          item.el.style.opacity = (0.12 + 0.88 * eased).toFixed(2);
+        });
+
+        if (sub) {
+          const subP = Math.max(0, Math.min(1, (baseProgress - 0.35) / 0.65));
+          sub.style.opacity = subP.toFixed(2);
+          sub.style.transform = `translateY(${((1 - subP) * 14).toFixed(1)}px)`;
+        }
+      }
+
+      window.addEventListener('scroll', updateWaveOnScroll, { passive: true });
+      window.addEventListener('resize', updateWaveOnScroll, { passive: true });
+      updateWaveOnScroll();
+    })();
+  </script>
+</div>
+
+  <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #94a3b8; letter-spacing: 0.04em; margin: 0;">
+    Охранные услуги, ГБР и монтаж сигнализации в Улан-Удэ и Бурятии
+  </p>
+</div>
+
 
   <!-- Переключатель во всю ширину -->
   <div class="grid grid-cols-2 rounded-xl overflow-hidden border border-sky-500/30 mb-10">
@@ -152,4 +295,191 @@
     </div>
   </section>
 
+<div id="sh-modal-bg" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(2,6,23,0.82); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:16px; opacity:0; transition:opacity 0.28s ease;">
+  <div id="sh-modal-card" style="position:relative; width:100%; max-width:520px; background:linear-gradient(145deg,#0f172a,#020617); border:1px solid rgba(56,189,248,0.45); border-radius:20px; padding:28px; box-shadow:0 0 50px rgba(56,189,248,0.22); color:#fff; font-family:'Manrope',sans-serif;">
+    <button id="sh-modal-x" type="button" style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:10px; border:1px solid #334155; background:#1e293b; color:#94a3b8; font-size:18px; cursor:pointer;">✕</button>
+    <div id="sh-m-badge" style="display:inline-block; font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:#38bdf8; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.3); border-radius:999px; padding:4px 12px; margin-bottom:12px;">ООО «Щит и А»</div>
+    <h3 id="sh-m-title" style="font-size:22px; font-weight:800; text-transform:uppercase; margin:0 0 12px 0; line-height:1.25;">Услуга</h3>
+    <p id="sh-m-desc" style="font-size:14px; line-height:1.6; color:#cbd5e1; margin:0 0 18px 0;">Описание</p>
+    <div style="background:rgba(2,6,23,0.65); border:1px solid #1e293b; border-radius:14px; padding:16px; margin-bottom:22px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; color:#94a3b8; margin-bottom:10px;">Что входит в услугу:</div>
+      <ul id="sh-m-list" style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; font-size:13.5px; color:#e2e8f0;"></ul>
+    </div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+      <a id="sh-m-cta" href="#contact" class="btn-primary-3d" style="flex:1; padding:14px 20px; text-align:center; font-size:14px; font-weight:700; text-transform:uppercase; text-decoration:none;">Оставить заявку</a>
+      <button id="sh-m-close" type="button" style="padding:14px 20px; border-radius:12px; border:1px solid #334155; background:transparent; color:#cbd5e1; font-size:14px; cursor:pointer;">Закрыть</button>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  if (window.__shModalInit) return;
+  window.__shModalInit = true;
+
+  const db = {
+    "пультовая охрана": {
+      badge: "Для бизнеса • Мониторинг 24/7",
+      title: "Пультовая охрана объектов",
+      desc: "Круглосуточный контроль офисов, магазинов и складов в Улан-Удэ и Заиграевском районе. При тревоге сигнал мгновенно поступает на пульт, и выезжает ближайший экипаж ГБР.",
+      items: ["Монтаж датчиков движения, открытия и разбития стекла", "Оперативный выезд вооружённого экипажа ГБР 24/7", "Материальная ответственность по договору", "Управление охраной со смартфона"],
+      cta: "Рассчитать охрану объекта"
+    },
+    "кнопка sos": {
+      badge: "Для бизнеса • Экстренный вызов",
+      title: "Тревожная кнопка (Кнопка SOS)",
+      desc: "Мгновенный вызов ГБР при нападении, конфликтах с посетителями, попытках кражи или угрозе персоналу.",
+      items: ["Стационарная скрытая кнопка или носимый радиобрелок", "Бесшумная передача сигнала без провокации нарушителя", "Круглосуточное дежурство экипажей ГБР", "Регулярная проверка канала связи"],
+      cta: "Подключить кнопку SOS"
+    },
+    "пожарная сигнализация": {
+      badge: "Для бизнеса • Пожарная безопасность",
+      title: "Пожарная сигнализация",
+      desc: "Проектирование, монтаж и обслуживание систем пожарной безопасности в соответствии с нормами МЧС.",
+      items: ["Проектирование и монтаж систем АПС и СОУЭ", "Установка дымовых и тепловых извещателей", "Вывод сигнала на пульт пожарного мониторинга", "Техническое обслуживание и документация для проверок"],
+      cta: "Заказать выезд инженера"
+    },
+    "физическая охрана": {
+      badge: "Для бизнеса • Посты охраны",
+      title: "Физическая охрана объектов",
+      desc: "Стационарные посты и патрулирование на предприятиях, стройках, складах и в торговых центрах.",
+      items: ["Лицензированные охранники 4–6 разрядов", "Контрольно-пропускной режим для людей и транспорта", "Предотвращение хищений и сохранность имущества", "Контроль видеонаблюдения и обход территории"],
+      cta: "Подобрать график постов"
+    },
+    "охрана мероприятий": {
+      badge: "Для бизнеса • Общественный порядок",
+      title: "Охрана мероприятий",
+      desc: "Обеспечение безопасности на форумах, концертах, корпоративах и спортивных событиях.",
+      items: ["Осмотр площадки и разработка плана безопасности", "Фейс-контроль и организация пропускного режима", "Оперативное пресечение конфликтов", "Взаимодействие с экстренными службами"],
+      cta: "Рассчитать охрану мероприятия"
+    },
+    "сопровождение грузов": {
+      badge: "Для бизнеса • Логистика",
+      title: "Сопровождение грузов",
+      desc: "Вооружённая защита ценных и коммерческих грузов при перевозке по Бурятии и России.",
+      items: ["Разработка безопасного маршрута движения", "Сопровождение в кабине или на автомобиле охраны", "Постоянная связь с оперативным дежурным", "Ответственность за сохранность груза в пути"],
+      cta: "Заказать сопровождение"
+    },
+    "охрана квартир": {
+      badge: "Для дома • Защита жилья",
+      title: "Пультовая охрана квартир",
+      desc: "Надёжная защита вашей квартиры от проникновения взломщиков, кражи имущества, пожара и протечек воды с круглосуточным выездом экипажа ГБР.",
+      items: ["Аккуратный монтаж беспроводных датчиков без повреждения ремонта", "Прибытие вооружённого экипажа ГБР по сигналу тревоги 24/7", "Push-уведомления на смартфон о постановке и снятии с охраны", "Возможность подключения датчиков дыма, газа и протечки воды"],
+      cta: "Защитить квартиру"
+    },
+    "дома и коттеджи": {
+      badge: "Для дома • Частный сектор",
+      title: "Охрана частных домов и коттеджей",
+      desc: "Комплексная защита загородных домов, коттеджей и участков в Улан-Удэ и Заиграевском районе с охраной периметра и хозпостроек.",
+      items: ["Контроль входных дверей, окон, гаража и периметра участка", "Встроенный аккумулятор — охрана работает даже при отключении света", "Оперативное реагирование экипажей ГБР в любую погоду", "Полное управление сигнализацией через приложение в телефоне"],
+      cta: "Защитить дом"
+    },
+    "охрана гаражей": {
+      badge: "Для дома • Сохранность авто",
+      title: "Охрана гаражей и боксов",
+      desc: "Круглосуточная защита гаражных боксов, автомобилей, мототехники и дорогостоящего инструмента от взлома ворот и проникновения.",
+      items: ["Морозостойкие датчики открытия ворот и движения (до -45 °C)", "Автономное питание и защищённый канал связи с пультом", "Мгновенный выезд группы быстрого реагирования при тревоге", "SMS и push-оповещения владельца о любых событиях"],
+      cta: "Подключить охрану гаража"
+    },
+    "видеонаблюдение": {
+      badge: "Для дома и бизнеса • Онлайн-контроль",
+      title: "Монтаж систем видеонаблюдения",
+      desc: "Установка современных IP-камер с ночной съёмкой, записью звука и круглосуточным онлайн-доступом со смартфона из любой точки мира.",
+      items: ["Подбор и установка уличных и внутренних HD/4K-камер", "Просмотр живого видео и архива записей через телефон", "Уведомления при обнаружении движения в охраняемой зоне", "Настройка облачного или локального хранения архива"],
+      cta: "Заказать расчёт камер"
+    },
+    "мобильный телохранитель": {
+      badge: "Для семьи • Тревожная кнопка в смартфоне",
+      title: "Мобильный телохранитель",
+      desc: "Экстренная тревожная кнопка в смартфоне для защиты детей, пожилых родственников и близких в любой точке зоны действия ГБР.",
+      items: ["Вызов группы быстрого реагирования одним нажатием в приложении", "Автоматическая передача точных GPS-координат человека на пульт", "Круглосуточная поддержка оперативного дежурного 24/7", "Идеально для безопасности детей по дороге из школы и пожилых людей"],
+      cta: "Подключить защиту близких"
+    },
+    "личная охрана": {
+      badge: "VIP-безопасность • Сопровождение",
+      title: "Личная охрана и сопровождение",
+      desc: "Индивидуальная физическая защита и безопасное сопровождение на деловых встречах, в поездках и повседневной жизни.",
+      items: ["Подготовленные лицензированные телохранители с опытом работы", "Предварительная проверка маршрутов и мест проведения встреч", "Строгая конфиденциальность и тактичность в любой обстановке", "Гибкий график работы: разовое сопровождение или на постоянной основе"],
+      cta: "Заказать личную охрану"
+    },
+
+  };
+
+  function addHints() {
+    document.querySelectorAll('#list-jur .glass-card, #list-phy .glass-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      const p = card.querySelector('p');
+      if (p && !card.querySelector('.sh-hint')) {
+        p.insertAdjacentHTML('afterend', '<div class="sh-hint" style="font-family:JetBrains Mono,monospace;font-size:12px;color:#38bdf8;margin-bottom:18px;">Подробнее об услуге →</div>');
+      }
+    });
+  }
+  addHints();
+  setTimeout(addHints, 500);
+
+  function openFromCard(card) {
+    const bg = document.getElementById('sh-modal-bg');
+    const box = document.getElementById('sh-modal-card');
+    if (!bg || !box) return;
+
+    const h3 = card.querySelector('h3');
+    const p = card.querySelector('p');
+    const key = h3 ? h3.textContent.trim().toLowerCase() : '';
+    const data = db[key] || {
+      badge: "Для дома • ООО «Щит и А»",
+      title: h3 ? h3.textContent.trim() : "Охранная услуга",
+      desc: (p ? p.textContent.trim() : "") + " Надёжная защита от лицензированного охранного предприятия в Улан-Удэ и Заиграевском районе.",
+      items: ["Беспроводной монтаж без повреждения ремонта", "Оперативный выезд экипажа ГБР 24/7", "Удобное управление и уведомления в смартфоне"],
+      cta: "Заказать охрану"
+    };
+
+    document.getElementById('sh-m-badge').textContent = data.badge;
+    document.getElementById('sh-m-title').textContent = data.title;
+    document.getElementById('sh-m-desc').textContent = data.desc;
+    document.getElementById('sh-m-cta').textContent = data.cta;
+    document.getElementById('sh-m-list').innerHTML = data.items.map(t => '<li style="display:flex;gap:10px;align-items:flex-start;"><span style="color:#38bdf8;font-weight:700;">✓</span><span>' + t + '</span></li>').join('');
+
+    const r = card.getBoundingClientRect();
+    const ox = (r.left + r.width / 2) - (window.innerWidth / 2);
+    const oy = (r.top + r.height / 2) - (window.innerHeight / 2);
+
+    box.style.transition = 'none';
+    box.style.transform = 'translate(' + ox + 'px,' + oy + 'px) scale(0.2)';
+    box.style.opacity = '0';
+    bg.style.display = 'flex';
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      bg.style.opacity = '1';
+      box.style.transition = 'transform 0.34s cubic-bezier(0.16,1,0.3,1), opacity 0.25s ease';
+      box.style.transform = 'translate(0,0) scale(1)';
+      box.style.opacity = '1';
+    }));
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeBox() {
+    const bg = document.getElementById('sh-modal-bg');
+    const box = document.getElementById('sh-modal-card');
+    if (!bg || !box) return;
+    bg.style.opacity = '0';
+    box.style.transform = 'scale(0.85)';
+    box.style.opacity = '0';
+    setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 260);
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('#sh-modal-x, #sh-m-close, #sh-m-cta') || e.target.id === 'sh-modal-bg') {
+      closeBox();
+      return;
+    }
+    const card = e.target.closest('#list-jur .glass-card, #list-phy .glass-card');
+    if (card && !e.target.closest('a, button')) {
+      openFromCard(card);
+    }
+  });
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBox(); });
+})();
+</script>
+
+  
 </section>

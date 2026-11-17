@@ -1,68 +1,322 @@
-<section id="calculator" class="scroll-mt-24 max-w-lg mx-auto py-16 px-4 text-center">
-  <button type="button"
-          onclick="const b=document.getElementById('calc-box'); b.classList.toggle('scale-0'); b.classList.toggle('opacity-0'); b.classList.toggle('max-h-0'); b.classList.toggle('p-0'); b.classList.toggle('p-6');"
-          class="btn-primary-3d px-8 py-4 text-base inline-flex items-center gap-3">
-    <i data-lucide="calculator" class="w-5 h-5"></i>
-    <span>Рассчитать стоимость услуг</span>
-  </button>
+<section id="calculator" class="scroll-mt-24 max-w-4xl mx-auto py-16 px-6">
+    <div style="text-align: center; padding: 12px 0;">
+    <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #94a3b8; margin: 0 0 18px 0;">
+      Воспользуйтесь калькулятором, чтобы узнать ориентировочную цену охраны
+    </p>
+    <button id="sh-calc-open-btn" type="button" class="btn-primary-3d"
+            style="display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:16px 34px; border-radius:14px; font-size:15px; font-weight:700; text-align:center; line-height:1.3; box-shadow:0 0 28px rgba(14,165,233,0.42); cursor:pointer;">
+      <svg xmlns="http://w3.org" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+      <span>Рассчитать примерную стоимость</span>
+    </button>
+  </div>
 
-  <div id="calc-box"
-       class="glass-card rounded-2xl border border-sky-400/40 shadow-2xl mt-6 text-left origin-bottom transition-all duration-500 overflow-hidden scale-0 opacity-0 max-h-0 p-0">
-    <div class="flex justify-between items-center mb-5">
-      <span class="font-mono-tech text-xs uppercase tracking-widest text-sky-400">Калькулятор ООО «Щит и А»</span>
-      <button type="button"
-              onclick="const b=document.getElementById('calc-box'); b.classList.add('scale-0','opacity-0','max-h-0','p-0'); b.classList.remove('p-6');"
-              class="text-slate-400 hover:text-white">✕</button>
+
+    <div id="sh-calc-backdrop" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(2,6,23,0.82); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:16px; overflow-y:auto;">
+    <div id="sh-calc-panel" style="width:100%; max-width:480px; margin:auto; background:linear-gradient(145deg,rgba(15,23,42,0.98),rgba(2,6,23,0.99)); border:1px solid rgba(56,189,248,0.45); border-radius:20px; padding:24px; box-shadow:0 0 50px rgba(56,189,248,0.22); color:#fff; font-family:'Manrope',sans-serif;">
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#38bdf8;">Калькулятор ООО «Щит и А»</span>
+      <button id="sh-calc-close-btn" type="button" aria-label="Закрыть калькулятор" style="background:transparent; border:none; color:#94a3b8; font-size:20px; cursor:pointer; padding:4px 8px;">✕</button>
     </div>
 
-    <div class="space-y-4">
-      <div>
-        <div class="flex justify-between text-sm mb-1">
-          <span class="text-slate-300">Площадь объекта</span>
-          <span id="v-area" class="font-mono-tech font-bold text-sky-400">100 м²</span>
-        </div>
-        <input id="r-area" type="range" min="20" max="500" step="10" value="100"
-               oninput="calcTotal()" class="w-full accent-sky-400 cursor-pointer" />
-      </div>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; background:rgba(2,6,23,0.7); padding:6px; border-radius:14px; border:1px solid #1e293b; margin-bottom:26px;">
+      <button type="button" class="sh-calc-tab" data-tab="pult" style="padding:12px 10px; border-radius:10px; border:none; font-weight:700; font-size:13px; cursor:pointer; background:#0ea5e9; color:#fff; transition:0.2s;">Пультовая охрана</button>
+      <button type="button" class="sh-calc-tab" data-tab="phys" style="padding:12px 10px; border-radius:10px; border:none; font-weight:700; font-size:13px; cursor:pointer; background:transparent; color:#94a3b8; transition:0.2s;">Физическая охрана</button>
+      <button type="button" class="sh-calc-tab" data-tab="video" style="padding:12px 10px; border-radius:10px; border:none; font-weight:700; font-size:13px; cursor:pointer; background:transparent; color:#94a3b8; transition:0.2s;">Видеонаблюдение</button>
+    </div>
 
+    <div id="sh-tab-pult" class="sh-calc-pane" style="display:flex; flex-direction:column; gap:20px;">
       <div>
-        <div class="flex justify-between text-sm mb-1">
-          <span class="text-slate-300">Количество комнат / зон</span>
-          <span id="v-rooms" class="font-mono-tech font-bold text-sky-400">3</span>
+        <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:8px;">
+          <span>Площадь помещения</span><strong id="v-pult-area" style="color:#38bdf8;">80 м²</strong>
         </div>
-        <input id="r-rooms" type="range" min="1" max="15" step="1" value="3"
-               oninput="calcTotal()" class="w-full accent-sky-400 cursor-pointer" />
+        <input id="in-pult-area" type="range" min="20" max="500" step="10" value="80" style="width:100%; accent-color:#0ea5e9; cursor:pointer;">
       </div>
-
       <div>
-        <div class="flex justify-between text-sm mb-1">
-          <span class="text-slate-300">Посты охраны / камеры</span>
-          <span id="v-posts" class="font-mono-tech font-bold text-sky-400">1</span>
+        <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:8px;">
+          <span>Количество комнат / помещений</span><strong id="v-pult-rooms" style="color:#38bdf8;">3</strong>
         </div>
-        <input id="r-posts" type="range" min="0" max="10" step="1" value="1"
-               oninput="calcTotal()" class="w-full accent-sky-400 cursor-pointer" />
+        <input id="in-pult-rooms" type="range" min="1" max="15" step="1" value="3" style="width:100%; accent-color:#0ea5e9; cursor:pointer;">
       </div>
-
-      <div class="pt-4 border-t border-sky-500/20 flex items-center justify-between">
-        <div>
-          <div class="text-xs text-slate-400">Итого в месяц:</div>
-          <div id="v-total" class="font-mono-tech text-2xl font-extrabold text-sky-400">11 500 ₽</div>
+      <div>
+        <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:8px;">
+          <span>Количество входных дверей</span><strong id="v-pult-doors" style="color:#38bdf8;">1</strong>
         </div>
-        <a href="#contact" class="btn-primary-3d px-5 py-2.5 text-sm">Оставить заявку</a>
+        <input id="in-pult-doors" type="range" min="1" max="6" step="1" value="1" style="width:100%; accent-color:#0ea5e9; cursor:pointer;">
+      </div>
+      <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#e2e8f0; cursor:pointer;">
+        <input id="in-pult-outbuilding" type="checkbox" style="width:18px; height:18px; accent-color:#0ea5e9;">
+        <span>Отдельно стоящее строение (баня, гараж, хозблок)</span>
+      </label>
+      <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#e2e8f0; cursor:pointer;">
+        <input id="in-pult-sos" type="checkbox" style="width:18px; height:18px; accent-color:#0ea5e9;">
+        <span>Тревожная кнопка ГБР (SOS)</span>
+      </label>
+    </div>
+
+    <div id="sh-tab-phys" class="sh-calc-pane" style="display:none; flex-direction:column; gap:20px;">
+      <div>
+        <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:8px;">
+          <span>Площадь помещения или территории</span><strong id="v-phys-area" style="color:#38bdf8;">500 м²</strong>
+        </div>
+        <input id="in-phys-area" type="range" min="100" max="10000" step="100" value="500" style="width:100%; accent-color:#0ea5e9; cursor:pointer;">
+      </div>
+      <div>
+        <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:8px;">
+          <span>Количество постов охраны</span><strong id="v-phys-posts" style="color:#38bdf8;">1 пост</strong>
+        </div>
+        <input id="in-phys-posts" type="range" min="1" max="10" step="1" value="1" style="width:100%; accent-color:#0ea5e9; cursor:pointer;">
+      </div>
+      <div>
+        <div style="font-size:14px; margin-bottom:8px;">Режим работы поста:</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <label style="display:flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid #334155; border-radius:10px; cursor:pointer; font-size:13.5px;">
+            <input type="radio" name="phys-mode" value="12" checked style="accent-color:#0ea5e9;"> 12 часов (день/ночь)
+          </label>
+          <label style="display:flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid #334155; border-radius:10px; cursor:pointer; font-size:13.5px;">
+            <input type="radio" name="phys-mode" value="24" style="accent-color:#0ea5e9;"> 24 часа (суточный)
+          </label>
+        </div>
+      </div>
+      <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#e2e8f0; cursor:pointer;">
+        <input id="in-phys-armed" type="checkbox" style="width:18px; height:18px; accent-color:#0ea5e9;">
+        <span>Вооружённый пост охраны (6 разряд)</span>
+      </label>
+    </div>
+
+    <div id="sh-tab-video" class="sh-calc-pane" style="display:none; flex-direction:column; gap:20px;">
+      <div>
+        <div style="font-size:14px; margin-bottom:8px;">Где устанавливаются камеры:</div>
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
+          <label style="display:flex; align-items:center; gap:6px; padding:10px; border:1px solid #334155; border-radius:10px; cursor:pointer; font-size:13px;">
+            <input type="radio" name="video-loc" value="indoor" checked style="accent-color:#0ea5e9;"> Внутри
+          </label>
+          <label style="display:flex; align-items:center; gap:6px; padding:10px; border:1px solid #334155; border-radius:10px; cursor:pointer; font-size:13px;">
+            <input type="radio" name="video-loc" value="outdoor" style="accent-color:#0ea5e9;"> Снаружи
+          </label>
+          <label style="display:flex; align-items:center; gap:6px; padding:10px; border:1px solid #334155; border-radius:10px; cursor:pointer; font-size:13px;">
+            <input type="radio" name="video-loc" value="combo" style="accent-color:#0ea5e9;"> Комбо
+          </label>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:8px;">
+          <span>Количество камер</span><strong id="v-video-cams" style="color:#38bdf8;">4 камеры</strong>
+        </div>
+        <input id="in-video-cams" type="range" min="1" max="32" step="1" value="4" style="width:100%; accent-color:#0ea5e9; cursor:pointer;">
+      </div>
+      <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#e2e8f0; cursor:pointer;">
+        <input id="in-video-cloud" type="checkbox" checked style="width:18px; height:18px; accent-color:#0ea5e9;">
+        <span>Онлайн-просмотр со смартфона + запись архива (от 14 дней)</span>
+      </label>
+    </div>
+
+    <div style="margin-top:28px; padding-top:22px; border-top:1px solid #1e293b; display:flex; flex-direction:column; gap:16px;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px;">
+        <div style="display:flex; flex-wrap:wrap; gap:24px;">
+          <div>
+            <div id="sh-calc-period" style="font-size:12px; color:#94a3b8; margin-bottom:4px;">Оборудование и монтаж (разово):</div>
+            <div id="sh-calc-total" style="font-size:26px; font-weight:800; color:#fff;">от 14 900 ₽</div>
+          </div>
+          <div id="sh-calc-sub-box" style="padding-left:20px; border-left:1px solid #1e293b;">
+            <div style="font-size:12px; color:#94a3b8; margin-bottom:4px;">Абонентская плата (в месяц):</div>
+            <div id="sh-calc-sub" style="font-size:26px; font-weight:800; color:#38bdf8;">1 500 ₽/мес</div>
+          </div>
+        </div>
+        <a id="sh-calc-submit" href="#contact" class="btn-primary-3d" style="padding:14px 28px; font-size:14px; font-weight:700; text-decoration:none;">Оставить заявку</a>
+      </div>
+      <div id="sh-calc-note" style="font-size:12px; color:#94a3b8; line-height:1.45;">
+        * Точная стоимость монтажа зависит от выбранного оборудования, количества датчиков и объёма работ на объекте.
       </div>
     </div>
   </div>
+  </div>
 </section>
-
 <script>
-  function calcTotal() {
-    const a = Number(document.getElementById('r-area').value);
-    const r = Number(document.getElementById('r-rooms').value);
-    const p = Number(document.getElementById('r-posts').value);
-    document.getElementById('v-area').textContent = a + ' м²';
-    document.getElementById('v-rooms').textContent = r;
-    document.getElementById('v-posts').textContent = p;
-    const sum = 3000 + (a * 25) + (r * 500) + (p * 4500);
-    document.getElementById('v-total').textContent = sum.toLocaleString('ru-RU') + ' ₽';
+(function () {
+  if (window.__shCalc3V5Init) return;
+  window.__shCalc3V5Init = true;
+  let activeTab = 'pult';
+
+  function fmt(num) {
+    return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽';
   }
+
+  function openCalc(triggerBtn) {
+    const bg = document.getElementById('sh-calc-backdrop');
+    const panel = document.getElementById('sh-calc-panel');
+    if (!bg || !panel) return;
+
+    if (bg.parentElement !== document.body) {
+      document.body.appendChild(bg);
+    }
+
+    panel.style.maxWidth = '540px';
+    panel.style.padding = '26px 28px';
+    bg.style.zIndex = '999999';
+
+    let ox = 0, oy = 0;
+    if (triggerBtn) {
+      const r = triggerBtn.getBoundingClientRect();
+      ox = (r.left + r.width / 2) - (window.innerWidth / 2);
+      oy = (r.top + r.height / 2) - (window.innerHeight / 2);
+    }
+
+    bg.style.transition = 'opacity 0.35s ease';
+    bg.style.opacity = '0';
+    bg.style.display = 'flex';
+
+    panel.style.transition = 'none';
+    panel.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) scale(0.25)';
+    panel.style.opacity = '0';
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        bg.style.opacity = '1';
+        panel.style.transition = 'transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease-out';
+        panel.style.transform = 'translate(0px, 0px) scale(1)';
+        panel.style.opacity = '1';
+      });
+    });
+
+    document.body.style.overflow = 'hidden';
+    recalc();
+  }
+
+  function closeCalc() {
+    const bg = document.getElementById('sh-calc-backdrop');
+    const panel = document.getElementById('sh-calc-panel');
+    if (!bg) return;
+
+    bg.style.opacity = '0';
+    if (panel) {
+      panel.style.transition = 'transform 0.28s ease-in, opacity 0.24s ease-in';
+      panel.style.transform = 'scale(0.85)';
+      panel.style.opacity = '0';
+    }
+
+    setTimeout(function () {
+      bg.style.display = 'none';
+      document.body.style.overflow = '';
+    }, 300);
+  }
+
+  function recalc() {
+    const periodEl = document.getElementById('sh-calc-period');
+    const totalEl = document.getElementById('sh-calc-total');
+    const subBox = document.getElementById('sh-calc-sub-box');
+    const subEl = document.getElementById('sh-calc-sub');
+    const noteEl = document.getElementById('sh-calc-note');
+    if (!periodEl || !totalEl) return '';
+
+    if (activeTab === 'pult') {
+      const area = +document.getElementById('in-pult-area').value;
+      const rooms = +document.getElementById('in-pult-rooms').value;
+      const doors = +document.getElementById('in-pult-doors').value;
+      const outb = document.getElementById('in-pult-outbuilding').checked;
+      const sos = document.getElementById('in-pult-sos').checked;
+
+      document.getElementById('v-pult-area').textContent = area + ' м²';
+      document.getElementById('v-pult-rooms').textContent = rooms;
+      document.getElementById('v-pult-doors').textContent = doors;
+
+      let installSum = 9500 + (rooms * 1800) + ((doors - 1) * 1500);
+      if (outb) installSum += 4500;
+      if (sos) installSum += 2500;
+
+      let monthlySub = area <= 50 ? 1200 : area <= 120 ? 1500 : area <= 250 ? 2200 : 3000;
+      if (outb) monthlySub += 500;
+
+      periodEl.textContent = 'Оборудование и монтаж (разово):';
+      totalEl.textContent = 'от ' + fmt(installSum);
+      if (subBox && subEl) { subBox.style.display = 'block'; subEl.textContent = fmt(monthlySub) + '/мес'; }
+      if (noteEl) noteEl.style.display = 'block';
+
+      return 'Пультовая охрана (' + area + ' м², комнат: ' + rooms + ', дверей: ' + doors + (outb ? ', +строение' : '') + (sos ? ', +кнопка SOS' : '') + ') — монтаж от ' + fmt(installSum) + ', абонплата ' + fmt(monthlySub) + '/мес';
+    }
+
+    if (activeTab === 'phys') {
+      const area = +document.getElementById('in-phys-area').value;
+      const posts = +document.getElementById('in-phys-posts').value;
+      const mode = document.querySelector('input[name="phys-mode"]:checked').value;
+      const armed = document.getElementById('in-phys-armed').checked;
+
+      document.getElementById('v-phys-area').textContent = area + ' м²';
+      document.getElementById('v-phys-posts').textContent = posts + (posts === 1 ? ' пост' : posts < 5 ? ' поста' : ' постов');
+
+      const sum = posts * ((mode === '24' ? 95000 : 52000) + (armed ? 20000 : 0)) + Math.floor(area / 1000) * 3000;
+      periodEl.textContent = 'Ориентировочная стоимость постов (в месяц):';
+      totalEl.textContent = 'от ' + fmt(sum);
+      if (subBox) subBox.style.display = 'none';
+      if (noteEl) noteEl.style.display = 'none';
+
+      return 'Физическая охрана (' + area + ' м², постов: ' + posts + ' по ' + mode + ' ч' + (armed ? ', вооружённый 6 разряд' : '') + ') — от ' + fmt(sum) + '/мес';
+    }
+
+    if (activeTab === 'video') {
+      const cams = +document.getElementById('in-video-cams').value;
+      const loc = document.querySelector('input[name="video-loc"]:checked').value;
+      const cloud = document.getElementById('in-video-cloud').checked;
+
+      document.getElementById('v-video-cams').textContent = cams + (cams === 1 ? ' камера' : cams < 5 ? ' камеры' : ' камер');
+      const pricePerCam = loc === 'indoor' ? 6500 : loc === 'outdoor' ? 8500 : 7500;
+      const sum = 6000 + (cams * pricePerCam) + (cloud ? 4500 : 0);
+
+      periodEl.textContent = 'Оборудование и монтаж «под ключ» (разово):';
+      totalEl.textContent = 'от ' + fmt(sum);
+      if (subBox) subBox.style.display = 'none';
+      if (noteEl) noteEl.style.display = 'block';
+
+      const locName = loc === 'indoor' ? 'внутри' : loc === 'outdoor' ? 'снаружи/периметр' : 'комбинированно';
+      return 'Видеонаблюдение (' + cams + ' камер, ' + locName + (cloud ? ', онлайн-доступ + архив' : '') + ') — от ' + fmt(sum);
+    }
+  }
+
+  function bindHeroCalcBtn() {
+    document.querySelectorAll('slot-hero a, slot-hero button, #hero a, #hero button').forEach(function (btn) {
+      if (btn.textContent.trim().toLowerCase().includes('рассчитать')) {
+        btn.textContent = 'Рассчитать примерную стоимость';
+        btn.style.textAlign = 'center';
+        if (!btn.dataset.shCalcBound) {
+          btn.dataset.shCalcBound = '1';
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            openCalc(btn);
+          });
+        }
+      }
+    });
+  }
+  bindHeroCalcBtn();
+  setTimeout(bindHeroCalcBtn, 400);
+
+  document.addEventListener('click', function (e) {
+    const openBtn = e.target.closest('#sh-calc-open-btn');
+    if (openBtn) { openCalc(openBtn); return; }
+    if (e.target.closest('#sh-calc-close-btn') || e.target.id === 'sh-calc-backdrop') { closeCalc(); return; }
+
+    const tabBtn = e.target.closest('.sh-calc-tab');
+    if (tabBtn) {
+      activeTab = tabBtn.dataset.tab;
+      document.querySelectorAll('.sh-calc-tab').forEach(b => { b.style.background = b === tabBtn ? '#0ea5e9' : 'transparent'; b.style.color = b === tabBtn ? '#fff' : '#94a3b8'; });
+      document.querySelectorAll('.sh-calc-pane').forEach(p => p.style.display = 'none');
+      const activePane = document.getElementById('sh-tab-' + activeTab);
+      if (activePane) activePane.style.display = 'flex';
+      recalc();
+    }
+    if (e.target.closest('#sh-calc-submit')) {
+      const summary = recalc();
+      const msgField = document.querySelector('#contact textarea, #contact input[name*="message"], #contact input[name*="comment"]');
+      if (msgField && summary) msgField.value = 'Расчёт из калькулятора: ' + summary;
+      closeCalc();
+    }
+  });
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCalc(); });
+  document.addEventListener('input', e => { if (e.target.closest('#sh-calc-panel')) recalc(); });
+  document.addEventListener('change', e => { if (e.target.closest('#sh-calc-panel')) recalc(); });
+})();
 </script>
+
+
+

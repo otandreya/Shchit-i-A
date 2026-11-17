@@ -9,8 +9,7 @@
     <meta name="geo.region" content="RU-BU">
     <meta name="geo.placename" content="Улан-Удэ, Республика Бурятия">
 
-    <link href="https://googleapis.com" rel="stylesheet">
-    <script src="https://unpkg.com"></script>
+    <script src="js/lucide.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
 
     <script type="application/ld+json">
@@ -29,7 +28,6 @@
     }
     </script>
 </head>
-
 <body class="bg-cyber-grid">
     <slot-header></slot-header>
     <slot-hero></slot-hero>
@@ -38,17 +36,16 @@
     <slot-contact></slot-contact>
     <slot-footer></slot-footer>
 
-        <script>
-             const revealObserver = new IntersectionObserver((entries) => {
-         entries.forEach((entry) => {
-             if (entry.isIntersecting) {
-                 entry.target.classList.add('is-visible');
-             } else {
-                 entry.target.classList.remove('is-visible');
-             }
-         });
-     }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
-
+    <script>
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                } else {
+                    entry.target.classList.remove('is-visible');
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
 
         function attachReveal(root = document) {
             root.querySelectorAll('section, .glass-card').forEach((el, index) => {
@@ -62,10 +59,8 @@
             });
         }
 
-        // Следим за динамически добавляемыми карточками (например из js/services.js)
         new MutationObserver(() => attachReveal()).observe(document.body, { childList: true, subtree: true });
 
-        // Загрузка блоков
         async function loadBlocks() {
             const slots = ['header', 'hero', 'services', 'calculator', 'contact', 'footer'];
             for (const slot of slots) {
@@ -91,30 +86,52 @@
                     console.error(`Ошибка загрузки блока ${slot}:`, error);
                 }
             }
-            lucide.createIcons();
+            if (window.lucide) {
+                lucide.createIcons();
+            }
             attachReveal();
         }
 
         loadBlocks();
-        // 3D-наклон и луч прожектора за курсором на карточках
-        document.addEventListener('mousemove', (e) => {
+
+        function updateSpotlight(clientX, clientY, tiltStrength = 10, scaleVal = 1.02) {
             document.querySelectorAll('.glass-card').forEach((card) => {
                 const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                const x = clientX - rect.left;
+                const y = clientY - rect.top;
                 card.style.setProperty('--x', `${x}px`);
                 card.style.setProperty('--y', `${y}px`);
                 if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
-                    const rotateX = ((y / rect.height) - 0.5) * -10;
-                    const rotateY = ((x / rect.width) - 0.5) * 10;
-                    card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                    const rotateX = ((y / rect.height) - 0.5) * -tiltStrength;
+                    const rotateY = ((x / rect.width) - 0.5) * tiltStrength;
+                    card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scaleVal})`;
                 } else {
                     card.style.transform = '';
                 }
             });
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            updateSpotlight(e.clientX, e.clientY, 10, 1.02);
         });
 
-    </script>
+        document.addEventListener('touchstart', (e) => {
+            if (e.touches[0]) {
+                updateSpotlight(e.touches[0].clientX, e.touches[0].clientY, 8, 1.01);
+            }
+        }, { passive: true });
 
+        document.addEventListener('touchmove', (e) => {
+            if (e.touches[0]) {
+                updateSpotlight(e.touches[0].clientX, e.touches[0].clientY, 8, 1.01);
+            }
+        }, { passive: true });
+
+        document.addEventListener('touchend', () => {
+            document.querySelectorAll('.glass-card').forEach((card) => {
+                card.style.transform = '';
+            });
+        });
+    </script>
 </body>
 </html>
