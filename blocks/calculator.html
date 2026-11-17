@@ -14,16 +14,13 @@
     <div id="sh-calc-backdrop" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(2,6,23,0.82); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:16px; overflow-y:auto;">
     <div id="sh-calc-panel" style="width:100%; max-width:480px; margin:auto; background:linear-gradient(145deg,rgba(15,23,42,0.98),rgba(2,6,23,0.99)); border:1px solid rgba(56,189,248,0.45); border-radius:20px; padding:24px; box-shadow:0 0 50px rgba(56,189,248,0.22); color:#fff; font-family:'Manrope',sans-serif;">
 
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#38bdf8;">Калькулятор ООО «Щит и А»</span>
-      <button id="sh-calc-close-btn" type="button" aria-label="Закрыть калькулятор" style="background:transparent; border:none; color:#94a3b8; font-size:20px; cursor:pointer; padding:4px 8px;">✕</button>
+                <div style="display:flex; align-items:stretch; width:100%; box-sizing:border-box; gap:4px; background:rgba(2,6,23,0.7); padding:4px; border-radius:14px; border:1px solid #1e293b; margin-bottom:24px;">
+      <button type="button" class="sh-calc-tab" data-tab="pult" style="flex:1 1 0; width:33.33%; min-width:0; max-width:33.33%; box-sizing:border-box; overflow:hidden; padding:10px 2px; border-radius:10px; border:none; font-weight:700; font-size:clamp(9.5px, 2.5vw, 13px); line-height:1.2; text-align:center; cursor:pointer; background:#0ea5e9; color:#fff; transition:0.2s;">Пультовая охрана</button>
+      <button type="button" class="sh-calc-tab" data-tab="phys" style="flex:1 1 0; width:33.33%; min-width:0; max-width:33.33%; box-sizing:border-box; overflow:hidden; padding:10px 2px; border-radius:10px; border:none; font-weight:700; font-size:clamp(9.5px, 2.5vw, 13px); line-height:1.2; text-align:center; cursor:pointer; background:transparent; color:#94a3b8; transition:0.2s;">Физическая охрана</button>
+      <button type="button" class="sh-calc-tab" data-tab="video" style="flex:1 1 0; width:33.33%; min-width:0; max-width:33.33%; box-sizing:border-box; overflow:hidden; padding:10px 2px; border-radius:10px; border:none; font-weight:700; font-size:clamp(9.5px, 2.5vw, 13px); line-height:1.2; text-align:center; cursor:pointer; background:transparent; color:#94a3b8; transition:0.2s;">Видеонаблюдение</button>
     </div>
 
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; background:rgba(2,6,23,0.7); padding:6px; border-radius:14px; border:1px solid #1e293b; margin-bottom:26px;">
-      <button type="button" class="sh-calc-tab" data-tab="pult" style="padding:12px 10px; border-radius:10px; border:none; font-weight:700; font-size:13px; cursor:pointer; background:#0ea5e9; color:#fff; transition:0.2s;">Пультовая охрана</button>
-      <button type="button" class="sh-calc-tab" data-tab="phys" style="padding:12px 10px; border-radius:10px; border:none; font-weight:700; font-size:13px; cursor:pointer; background:transparent; color:#94a3b8; transition:0.2s;">Физическая охрана</button>
-      <button type="button" class="sh-calc-tab" data-tab="video" style="padding:12px 10px; border-radius:10px; border:none; font-weight:700; font-size:13px; cursor:pointer; background:transparent; color:#94a3b8; transition:0.2s;">Видеонаблюдение</button>
-    </div>
+
 
     <div id="sh-tab-pult" class="sh-calc-pane" style="display:flex; flex-direction:column; gap:20px;">
       <div>
@@ -152,7 +149,9 @@
     }
 
     panel.style.maxWidth = '540px';
-    panel.style.padding = '26px 28px';
+        panel.style.padding = window.innerWidth < 480 ? '20px 16px' : '26px 28px';
+    panel.style.boxSizing = 'border-box';
+
     bg.style.zIndex = '999999';
 
     let ox = 0, oy = 0;
