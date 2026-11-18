@@ -97,20 +97,21 @@ body.bg-cyber-grid::before {
 
 /* Плавное выкатывание блоков и карточек снизу вверх */
 .reveal-up {
-  opacity: 0 !important;
-  transform: translateY(70px) !important;
+  opacity: 0;
+  transform: translateY(70px);
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
               transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .reveal-up.is-visible {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Мгновенный 3D-наклон только когда мышка уже наведена на карточку */
+/* Мгновенный 3D-наклон при наведении мыши без 1.2s задержки */
 .glass-card.reveal-up.is-visible:hover {
   transition: border-color 0.2s ease,
-              box-shadow 0.2s ease !important;
+              box-shadow 0.2s ease,
+              background 0.2s ease !important;
   transition-delay: 0ms !important;
 }
