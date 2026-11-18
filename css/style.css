@@ -115,3 +115,86 @@ body.bg-cyber-grid::before {
               background 0.2s ease !important;
   transition-delay: 0ms !important;
 }
+/* Эффект мозаики со световым лучом сканера на главном заголовке */
+.hero-mosaic-title {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  padding: 4px 8px;
+}
+
+.mosaic-piece {
+  display: inline-block;
+  opacity: 0;
+  color: #38bdf8;
+  text-shadow: 0 0 18px rgba(56, 189, 248, 0.85);
+  transform: translate(var(--mx, 0px), var(--my, 0px)) rotate(var(--mr, 0deg)) scale(0.4);
+  filter: blur(4px);
+  transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.65s ease,
+              filter 0.7s ease,
+              color 0.5s ease 0.85s,
+              text-shadow 0.5s ease 0.45s;
+}
+
+.mosaic-piece.is-accent {
+  color: #38bdf8;
+}
+
+.hero-mosaic-title.is-assembled .mosaic-piece {
+  opacity: 1;
+  transform: translate(0, 0) rotate(0deg) scale(1);
+  filter: blur(0);
+}
+
+.hero-mosaic-title.is-assembled .mosaic-piece:not(.is-accent) {
+  color: #ffffff;
+  text-shadow: 0 4px 20px rgba(2, 6, 23, 0.6);
+}
+
+.hero-mosaic-title.is-assembled .mosaic-piece.is-accent {
+  color: #38bdf8;
+  text-shadow: 0 0 24px rgba(56, 189, 248, 0.45);
+}
+
+/* Луч неонового сканера, пробегающий слева направо после сборки */
+.hero-mosaic-title::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -40%;
+  width: 35%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(56, 189, 248, 0.15) 35%,
+    rgba(255, 255, 255, 0.85) 50%,
+    rgba(56, 189, 248, 0.15) 65%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.hero-mosaic-title.is-assembled::after {
+  animation: heroScannerSweep 1.8s cubic-bezier(0.25, 1, 0.5, 1) 1.25s forwards;
+}
+
+@keyframes heroScannerSweep {
+  0% {
+    left: -40%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    left: 120%;
+    opacity: 0;
+  }
+}

@@ -121,3 +121,53 @@ document.addEventListener('click', (e) => {
         if (drawer) drawer.classList.remove('is-open');
     }
 });
+// Анимация сборки заголовка в мозаику со световым лучом сканера
+function initHeroMosaic() {
+  const title = document.querySelector('.hero-mosaic-title');
+  if (!title || title.dataset.mosaicReady) return;
+  title.dataset.mosaicReady = '1';
+
+  const isMobile = window.innerWidth < 640;
+  const spread = isMobile ? 28 : 65;
+
+  const nodes = Array.from(title.childNodes);
+  title.innerHTML = '';
+
+  let charIndex = 0;
+  nodes.forEach((node) => {
+    const isAccent = node.nodeType === 1 && node.classList.contains('text-sky-400');
+    const text = node.textContent;
+
+    for (const ch of text) {
+      if (ch === ' ') {
+        title.appendChild(document.createTextNode(' '));
+        continue;
+      }
+      const span = document.createElement('span');
+      span.className = 'mosaic-piece' + (isAccent ? ' is-accent' : '');
+      span.setAttribute('aria-hidden', 'true');
+      span.textContent = ch;
+
+      const rx = Math.round((Math.random() - 0.5) * 2 * spread);
+      const ry = Math.round((Math.random() - 0.5) * 2 * spread);
+      const rr = Math.round((Math.random() - 0.5) * 50);
+
+      span.style.setProperty('--mx', rx + 'px');
+      span.style.setProperty('--my', ry + 'px');
+      span.style.setProperty('--mr', rr + 'deg');
+      span.style.transitionDelay = (charIndex * 55) + 'ms';
+
+      title.appendChild(span);
+      charIndex++;
+    }
+  });
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      title.classList.add('is-assembled');
+    });
+  });
+}
+
+new MutationObserver(() => initHeroMosaic()).observe(document.body, { childList: true, subtree: true });
+document.addEventListener('DOMContentLoaded', initHeroMosaic);
