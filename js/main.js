@@ -23,7 +23,8 @@ function attachReveal(root = document) {
 new MutationObserver(() => attachReveal()).observe(document.body, { childList: true, subtree: true });
 
 async function loadBlocks() {
-    const slots = ['header', 'hero', 'services', 'calculator', 'contact', 'footer'];
+    const slots = ['header', 'hero', 'services', 'calculator', 'faq', 'contact', 'footer'];
+
     for (const slot of slots) {
         try {
             const response = await fetch('blocks/' + slot + '.html');

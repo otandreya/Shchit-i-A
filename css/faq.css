@@ -1,0 +1,124 @@
+/* Компактная ширина секции FAQ по центру экрана */
+.faq-wrap {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 56px 16px;
+}
+
+/* Блок цифр «Почему выбирают нас» (без 3D-наклона) */
+.faq-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 768px) {
+  .faq-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.faq-stat-box {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-top: 3px solid #0284c7;
+  border-radius: 14px;
+  padding: 20px 14px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.25);
+}
+
+.faq-stat-num {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0284c7;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.faq-stat-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.faq-stat-sub {
+  font-size: 11.5px;
+  color: #475569;
+  line-height: 1.4;
+}
+
+/* Светлый компактный аккордеон вопросов (без 3D-наклона) */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faq-item {
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.2);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.faq-item:hover,
+.faq-item.is-open {
+  background: #ffffff;
+  border-color: #0284c7;
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 20px;
+  background: transparent;
+  border: none;
+  color: #0f172a;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: #e0f2fe;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: 700;
+  transition: transform 0.25s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.faq-item.is-open .faq-icon {
+  transform: rotate(45deg);
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-answer-inner {
+  padding: 14px 20px 18px 20px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #334155;
+  border-top: 1px solid #e2e8f0;
+}
