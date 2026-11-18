@@ -138,9 +138,6 @@
   </script>
 </div>
 
-  <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #94a3b8; letter-spacing: 0.04em; margin: 0;">
-    Охранные услуги, ГБР и монтаж сигнализации в Улан-Удэ и Бурятии
-  </p>
 </div>
 
 
@@ -295,191 +292,23 @@
     </div>
   </section>
 
-<div id="sh-modal-bg" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(2,6,23,0.82); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:16px; opacity:0; transition:opacity 0.28s ease;">
-  <div id="sh-modal-card" style="position:relative; width:100%; max-width:520px; background:linear-gradient(145deg,#0f172a,#020617); border:1px solid rgba(56,189,248,0.45); border-radius:20px; padding:28px; box-shadow:0 0 50px rgba(56,189,248,0.22); color:#fff; font-family:'Manrope',sans-serif;">
-    <button id="sh-modal-x" type="button" style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:10px; border:1px solid #334155; background:#1e293b; color:#94a3b8; font-size:18px; cursor:pointer;">✕</button>
-    <div id="sh-m-badge" style="display:inline-block; font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:#38bdf8; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.3); border-radius:999px; padding:4px 12px; margin-bottom:12px;">ООО «Щит и А»</div>
-    <h3 id="sh-m-title" style="font-size:22px; font-weight:800; text-transform:uppercase; margin:0 0 12px 0; line-height:1.25;">Услуга</h3>
-    <p id="sh-m-desc" style="font-size:14px; line-height:1.6; color:#cbd5e1; margin:0 0 18px 0;">Описание</p>
-    <div style="background:rgba(2,6,23,0.65); border:1px solid #1e293b; border-radius:14px; padding:16px; margin-bottom:22px;">
-      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; color:#94a3b8; margin-bottom:10px;">Что входит в услугу:</div>
-      <ul id="sh-m-list" style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; font-size:13.5px; color:#e2e8f0;"></ul>
+<div id="sh-modal-bg">
+  <div id="sh-modal-card">
+    <button id="sh-modal-x" type="button" aria-label="Закрыть">✕</button>
+    <div id="sh-m-badge">ООО «Щит и А»</div>
+    <h3 id="sh-m-title">Услуга</h3>
+    <p id="sh-m-desc">Описание</p>
+    <div class="sh-m-list-wrap">
+      <div class="sh-m-list-head">Что входит в услугу:</div>
+      <ul id="sh-m-list"></ul>
     </div>
-    <div style="display:flex; gap:12px; flex-wrap:wrap;">
-      <a id="sh-m-cta" href="#contact" class="btn-primary-3d" style="flex:1; padding:14px 20px; text-align:center; font-size:14px; font-weight:700; text-transform:uppercase; text-decoration:none;">Оставить заявку</a>
-      <button id="sh-m-close" type="button" style="padding:14px 20px; border-radius:12px; border:1px solid #334155; background:transparent; color:#cbd5e1; font-size:14px; cursor:pointer;">Закрыть</button>
+    <div class="sh-m-actions">
+      <a id="sh-m-cta" href="#contact" class="btn-primary-3d">Оставить заявку</a>
+      <button id="sh-m-close" type="button">Закрыть</button>
     </div>
   </div>
 </div>
-<script>
-(function () {
-  if (window.__shModalInit) return;
-  window.__shModalInit = true;
 
-  const db = {
-    "пультовая охрана": {
-      badge: "Для бизнеса • Мониторинг 24/7",
-      title: "Пультовая охрана объектов",
-      desc: "Круглосуточный контроль офисов, магазинов и складов в Улан-Удэ и Заиграевском районе. При тревоге сигнал мгновенно поступает на пульт, и выезжает ближайший экипаж ГБР.",
-      items: ["Монтаж датчиков движения, открытия и разбития стекла", "Оперативный выезд вооружённого экипажа ГБР 24/7", "Материальная ответственность по договору", "Управление охраной со смартфона"],
-      cta: "Рассчитать охрану объекта"
-    },
-    "кнопка sos": {
-      badge: "Для бизнеса • Экстренный вызов",
-      title: "Тревожная кнопка (Кнопка SOS)",
-      desc: "Мгновенный вызов ГБР при нападении, конфликтах с посетителями, попытках кражи или угрозе персоналу.",
-      items: ["Стационарная скрытая кнопка или носимый радиобрелок", "Бесшумная передача сигнала без провокации нарушителя", "Круглосуточное дежурство экипажей ГБР", "Регулярная проверка канала связи"],
-      cta: "Подключить кнопку SOS"
-    },
-    "пожарная сигнализация": {
-      badge: "Для бизнеса • Пожарная безопасность",
-      title: "Пожарная сигнализация",
-      desc: "Проектирование, монтаж и обслуживание систем пожарной безопасности в соответствии с нормами МЧС.",
-      items: ["Проектирование и монтаж систем АПС и СОУЭ", "Установка дымовых и тепловых извещателей", "Вывод сигнала на пульт пожарного мониторинга", "Техническое обслуживание и документация для проверок"],
-      cta: "Заказать выезд инженера"
-    },
-    "физическая охрана": {
-      badge: "Для бизнеса • Посты охраны",
-      title: "Физическая охрана объектов",
-      desc: "Стационарные посты и патрулирование на предприятиях, стройках, складах и в торговых центрах.",
-      items: ["Лицензированные охранники 4–6 разрядов", "Контрольно-пропускной режим для людей и транспорта", "Предотвращение хищений и сохранность имущества", "Контроль видеонаблюдения и обход территории"],
-      cta: "Подобрать график постов"
-    },
-    "охрана мероприятий": {
-      badge: "Для бизнеса • Общественный порядок",
-      title: "Охрана мероприятий",
-      desc: "Обеспечение безопасности на форумах, концертах, корпоративах и спортивных событиях.",
-      items: ["Осмотр площадки и разработка плана безопасности", "Фейс-контроль и организация пропускного режима", "Оперативное пресечение конфликтов", "Взаимодействие с экстренными службами"],
-      cta: "Рассчитать охрану мероприятия"
-    },
-    "сопровождение грузов": {
-      badge: "Для бизнеса • Логистика",
-      title: "Сопровождение грузов",
-      desc: "Вооружённая защита ценных и коммерческих грузов при перевозке по Бурятии и России.",
-      items: ["Разработка безопасного маршрута движения", "Сопровождение в кабине или на автомобиле охраны", "Постоянная связь с оперативным дежурным", "Ответственность за сохранность груза в пути"],
-      cta: "Заказать сопровождение"
-    },
-    "охрана квартир": {
-      badge: "Для дома • Защита жилья",
-      title: "Пультовая охрана квартир",
-      desc: "Надёжная защита вашей квартиры от проникновения взломщиков, кражи имущества, пожара и протечек воды с круглосуточным выездом экипажа ГБР.",
-      items: ["Аккуратный монтаж беспроводных датчиков без повреждения ремонта", "Прибытие вооружённого экипажа ГБР по сигналу тревоги 24/7", "Push-уведомления на смартфон о постановке и снятии с охраны", "Возможность подключения датчиков дыма, газа и протечки воды"],
-      cta: "Защитить квартиру"
-    },
-    "дома и коттеджи": {
-      badge: "Для дома • Частный сектор",
-      title: "Охрана частных домов и коттеджей",
-      desc: "Комплексная защита загородных домов, коттеджей и участков в Улан-Удэ и Заиграевском районе с охраной периметра и хозпостроек.",
-      items: ["Контроль входных дверей, окон, гаража и периметра участка", "Встроенный аккумулятор — охрана работает даже при отключении света", "Оперативное реагирование экипажей ГБР в любую погоду", "Полное управление сигнализацией через приложение в телефоне"],
-      cta: "Защитить дом"
-    },
-    "охрана гаражей": {
-      badge: "Для дома • Сохранность авто",
-      title: "Охрана гаражей и боксов",
-      desc: "Круглосуточная защита гаражных боксов, автомобилей, мототехники и дорогостоящего инструмента от взлома ворот и проникновения.",
-      items: ["Морозостойкие датчики открытия ворот и движения (до -45 °C)", "Автономное питание и защищённый канал связи с пультом", "Мгновенный выезд группы быстрого реагирования при тревоге", "SMS и push-оповещения владельца о любых событиях"],
-      cta: "Подключить охрану гаража"
-    },
-    "видеонаблюдение": {
-      badge: "Для дома и бизнеса • Онлайн-контроль",
-      title: "Монтаж систем видеонаблюдения",
-      desc: "Установка современных IP-камер с ночной съёмкой, записью звука и круглосуточным онлайн-доступом со смартфона из любой точки мира.",
-      items: ["Подбор и установка уличных и внутренних HD/4K-камер", "Просмотр живого видео и архива записей через телефон", "Уведомления при обнаружении движения в охраняемой зоне", "Настройка облачного или локального хранения архива"],
-      cta: "Заказать расчёт камер"
-    },
-    "мобильный телохранитель": {
-      badge: "Для семьи • Тревожная кнопка в смартфоне",
-      title: "Мобильный телохранитель",
-      desc: "Экстренная тревожная кнопка в смартфоне для защиты детей, пожилых родственников и близких в любой точке зоны действия ГБР.",
-      items: ["Вызов группы быстрого реагирования одним нажатием в приложении", "Автоматическая передача точных GPS-координат человека на пульт", "Круглосуточная поддержка оперативного дежурного 24/7", "Идеально для безопасности детей по дороге из школы и пожилых людей"],
-      cta: "Подключить защиту близких"
-    },
-    "личная охрана": {
-      badge: "VIP-безопасность • Сопровождение",
-      title: "Личная охрана и сопровождение",
-      desc: "Индивидуальная физическая защита и безопасное сопровождение на деловых встречах, в поездках и повседневной жизни.",
-      items: ["Подготовленные лицензированные телохранители с опытом работы", "Предварительная проверка маршрутов и мест проведения встреч", "Строгая конфиденциальность и тактичность в любой обстановке", "Гибкий график работы: разовое сопровождение или на постоянной основе"],
-      cta: "Заказать личную охрану"
-    },
-
-  };
-
-  function addHints() {
-    document.querySelectorAll('#list-jur .glass-card, #list-phy .glass-card').forEach(card => {
-      card.style.cursor = 'pointer';
-      const p = card.querySelector('p');
-      if (p && !card.querySelector('.sh-hint')) {
-        p.insertAdjacentHTML('afterend', '<div class="sh-hint" style="font-family:JetBrains Mono,monospace;font-size:12px;color:#38bdf8;margin-bottom:18px;">Подробнее об услуге →</div>');
-      }
-    });
-  }
-  addHints();
-  setTimeout(addHints, 500);
-
-  function openFromCard(card) {
-    const bg = document.getElementById('sh-modal-bg');
-    const box = document.getElementById('sh-modal-card');
-    if (!bg || !box) return;
-
-    const h3 = card.querySelector('h3');
-    const p = card.querySelector('p');
-    const key = h3 ? h3.textContent.trim().toLowerCase() : '';
-    const data = db[key] || {
-      badge: "Для дома • ООО «Щит и А»",
-      title: h3 ? h3.textContent.trim() : "Охранная услуга",
-      desc: (p ? p.textContent.trim() : "") + " Надёжная защита от лицензированного охранного предприятия в Улан-Удэ и Заиграевском районе.",
-      items: ["Беспроводной монтаж без повреждения ремонта", "Оперативный выезд экипажа ГБР 24/7", "Удобное управление и уведомления в смартфоне"],
-      cta: "Заказать охрану"
-    };
-
-    document.getElementById('sh-m-badge').textContent = data.badge;
-    document.getElementById('sh-m-title').textContent = data.title;
-    document.getElementById('sh-m-desc').textContent = data.desc;
-    document.getElementById('sh-m-cta').textContent = data.cta;
-    document.getElementById('sh-m-list').innerHTML = data.items.map(t => '<li style="display:flex;gap:10px;align-items:flex-start;"><span style="color:#38bdf8;font-weight:700;">✓</span><span>' + t + '</span></li>').join('');
-
-    const r = card.getBoundingClientRect();
-    const ox = (r.left + r.width / 2) - (window.innerWidth / 2);
-    const oy = (r.top + r.height / 2) - (window.innerHeight / 2);
-
-    box.style.transition = 'none';
-    box.style.transform = 'translate(' + ox + 'px,' + oy + 'px) scale(0.2)';
-    box.style.opacity = '0';
-    bg.style.display = 'flex';
-
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      bg.style.opacity = '1';
-      box.style.transition = 'transform 0.34s cubic-bezier(0.16,1,0.3,1), opacity 0.25s ease';
-      box.style.transform = 'translate(0,0) scale(1)';
-      box.style.opacity = '1';
-    }));
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeBox() {
-    const bg = document.getElementById('sh-modal-bg');
-    const box = document.getElementById('sh-modal-card');
-    if (!bg || !box) return;
-    bg.style.opacity = '0';
-    box.style.transform = 'scale(0.85)';
-    box.style.opacity = '0';
-    setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 260);
-  }
-
-  document.addEventListener('click', function (e) {
-    if (e.target.closest('#sh-modal-x, #sh-m-close, #sh-m-cta') || e.target.id === 'sh-modal-bg') {
-      closeBox();
-      return;
-    }
-    const card = e.target.closest('#list-jur .glass-card, #list-phy .glass-card');
-    if (card && !e.target.closest('a, button')) {
-      openFromCard(card);
-    }
-  });
-
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBox(); });
-})();
-</script>
 
   
 </section>

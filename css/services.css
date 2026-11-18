@@ -1,0 +1,183 @@
+/* Анимация заголовка «Мы гарантируем» */
+.sh-wave-heading {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(26px, 4.2vw, 44px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 14px 0;
+  line-height: 1.2;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sh-wave-char {
+  display: inline-block;
+  will-change: transform, opacity;
+  transition: transform 0.14s ease-out, opacity 0.14s ease-out;
+}
+
+.sh-wave-accent {
+  color: #38bdf8;
+  text-shadow: 0 0 24px rgba(56, 189, 248, 0.4);
+}
+
+.sh-wave-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+  margin: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sh-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #38bdf8;
+  margin-bottom: 18px;
+}
+
+/* Модальное окно подробного описания услуги (строго по центру экрана) */
+#sh-modal-bg {
+  display: none;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 999999 !important;
+  background: rgba(2, 6, 23, 0.82);
+  backdrop-filter: blur(8px);
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+#sh-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin: auto;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  background: linear-gradient(145deg, #0f172a, #020617);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 0 50px rgba(56, 189, 248, 0.22);
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+}
+
+@media (max-width: 480px) {
+  #sh-modal-card {
+    padding: 22px 16px;
+  }
+}
+
+#sh-modal-x {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  background: #1e293b;
+  color: #94a3b8;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#sh-m-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-bottom: 12px;
+}
+
+#sh-m-title {
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+  line-height: 1.25;
+}
+
+#sh-m-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 0 0 18px 0;
+}
+
+.sh-m-list-wrap {
+  background: rgba(2, 6, 23, 0.65);
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 22px;
+}
+
+.sh-m-list-head {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+
+#sh-m-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13.5px;
+  color: #e2e8f0;
+}
+
+.sh-m-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+#sh-m-cta {
+  flex: 1;
+  padding: 14px 20px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+#sh-m-close {
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 14px;
+  cursor: pointer;
+}
+/* Убираем transform у секции услуг после появления, чтобы окно не привязывалось к ней */
+#services.reveal-up.is-visible {
+  transform: none !important;
+}
