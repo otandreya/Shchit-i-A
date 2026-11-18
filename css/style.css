@@ -95,28 +95,22 @@ body.bg-cyber-grid::before {
   backface-visibility: hidden;
 }
 
-/* Плавное появление при скроллинге вниз и исчезновение при уходе вверх (ПК и телефон) */
+/* Плавное выкатывание блоков и карточек снизу вверх */
 .reveal-up {
-  opacity: 0;
-  transform: translateY(36px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  opacity: 0 !important;
+  transform: translateY(70px) !important;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .reveal-up.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
-/* Для карточек: оставляем плавное появление при скролле, но без задержки 3D-наклона при наведении */
-.glass-card.reveal-up.is-visible {
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.25s ease,
-              box-shadow 0.25s ease,
-              background 0.25s ease !important;
-}
-
-.glass-card.reveal-up:hover {
+/* Мгновенный 3D-наклон только когда мышка уже наведена на карточку */
+.glass-card.reveal-up.is-visible:hover {
+  transition: border-color 0.2s ease,
+              box-shadow 0.2s ease !important;
   transition-delay: 0ms !important;
 }

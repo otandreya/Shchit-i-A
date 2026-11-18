@@ -6,11 +6,11 @@ const revealObserver = new IntersectionObserver((entries) => {
             entry.target.classList.remove('is-visible');
         }
     });
-}, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+}, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
 
 function attachReveal(root = document) {
     root.querySelectorAll('section, .glass-card').forEach((el, index) => {
-        if (el.dataset.revealBound || el.closest('slot-header') || el.closest('slot-hero')) return;
+                if (el.dataset.revealBound || el.closest('slot-header') || el.closest('slot-hero') || el.id === 'services') return;
         el.dataset.revealBound = '1';
         el.classList.add('reveal-up');
         if (el.classList.contains('glass-card')) {
@@ -102,3 +102,21 @@ document.addEventListener('mousemove', (e) => {
 window.addEventListener('scroll', () => {
     if (activeCard) activeRect = activeCard.getBoundingClientRect();
 }, { passive: true });
+
+// Двухэтажная шапка при скролле и мобильное меню
+window.addEventListener('scroll', () => {
+    const header = document.getElementById('main-header');
+    if (!header) return;
+    if (window.scrollY > 70) header.classList.add('is-scrolled');
+    else if (window.scrollY < 15) header.classList.remove('is-scrolled');
+}, { passive: true });
+
+document.addEventListener('click', (e) => {
+    if (e.target.closest('#sh-mobile-toggle')) {
+        const drawer = document.getElementById('mobile-menu');
+        if (drawer) drawer.classList.toggle('is-open');
+    } else if (e.target.closest('.sh-mobile-link')) {
+        const drawer = document.getElementById('mobile-menu');
+        if (drawer) drawer.classList.remove('is-open');
+    }
+});
