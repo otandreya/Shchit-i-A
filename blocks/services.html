@@ -1,141 +1,14 @@
 <section id="services" class="scroll-mt-24 max-w-7xl mx-auto py-16 px-6">
   <div style="text-align: center; margin-bottom: 44px; padding-top: 8px;">
  <div id="guarantee-title-box" style="text-align: center; margin-bottom: 48px; padding-top: 10px; overflow: hidden;">
-  <style>
-    .sh-wave-heading {
-      font-family: 'Manrope', sans-serif;
-      font-size: clamp(26px, 4.2vw, 44px);
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #ffffff;
-      margin: 0 0 14px 0;
-      line-height: 1.2;
-      display: inline-flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .sh-wave-char {
-      display: inline-block;
-      will-change: transform, opacity;
-      transition: transform 0.14s ease-out, opacity 0.14s ease-out;
-    }
-    .sh-wave-accent {
-      color: #38bdf8;
-      text-shadow: 0 0 24px rgba(56, 189, 248, 0.4);
-    }
-    .sh-wave-sub {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      color: #94a3b8;
-      letter-spacing: 0.04em;
-      margin: 0;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-  </style>
+  
 
   <h2 id="guarantee-wave-title" class="sh-wave-heading" aria-label="Мы гарантируем"></h2>
   <p id="guarantee-wave-sub" class="sh-wave-sub">
     Охранные услуги, ГБР и монтаж сигнализации в Улан-Удэ и Бурятии
   </p>
 
-  <script>
-    (function () {
-      const box = document.getElementById('guarantee-title-box');
-      const title = document.getElementById('guarantee-wave-title');
-      const sub = document.getElementById('guarantee-wave-sub');
-      if (!box || !title) return;
-
-      const words = [
-        { text: 'Мы', accent: false },
-        { text: ' ', accent: false },
-        { text: 'гарантируем', accent: true }
-      ];
-
-      // Разлёт букв в разные стороны с плавной волной
-      const offsets = [
-        { x: -75, y: -45, r: -18 },
-        { x: -35, y: 50,  r: 14 },
-        { x: 0,   y: 0,   r: 0 },
-        { x: 40,  y: -55, r: 16 },
-        { x: -50, y: 45,  r: -14 },
-        { x: 65,  y: -35, r: 20 },
-        { x: -30, y: -50, r: -12 },
-        { x: 55,  y: 48,  r: 15 },
-        { x: -65, y: -30, r: -16 },
-        { x: 35,  y: 52,  r: 12 },
-        { x: 75,  y: -42, r: -19 },
-        { x: -40, y: 46,  r: 14 },
-        { x: 60,  y: -48, r: -15 },
-        { x: 85,  y: 38,  r: 18 }
-      ];
-
-      let charIndex = 0;
-      const chars = [];
-
-      words.forEach((word) => {
-        if (word.text === ' ') {
-          const space = document.createElement('span');
-          space.innerHTML = '&nbsp;';
-          space.style.width = '0.32em';
-          space.style.display = 'inline-block';
-          title.appendChild(space);
-          charIndex++;
-          return;
-        }
-        const wordWrap = document.createElement('span');
-        wordWrap.style.display = 'inline-block';
-        wordWrap.style.whiteSpace = 'nowrap';
-
-        for (const ch of word.text) {
-          const span = document.createElement('span');
-          span.textContent = ch;
-          span.className = 'sh-wave-char' + (word.accent ? ' sh-wave-accent' : '');
-          const off = offsets[charIndex % offsets.length];
-          chars.push({ el: span, off, idx: charIndex });
-          wordWrap.appendChild(span);
-          charIndex++;
-        }
-        title.appendChild(wordWrap);
-      });
-
-      function updateWaveOnScroll() {
-        const rect = box.getBoundingClientRect();
-        const vh = window.innerHeight || document.documentElement.clientHeight;
-        // Прогресс от 0 (заголовок только появился снизу экрана) до 1 (поднялся выше середины экрана)
-        const start = vh * 0.96;
-        const end = vh * 0.52;
-        const rawProgress = (start - rect.top) / (start - end);
-        const baseProgress = Math.max(0, Math.min(1, rawProgress));
-
-        chars.forEach((item) => {
-          // Сдвиг по времени для каждой буквы, чтобы сборка шла живой волной
-          const waveDelay = (item.idx / chars.length) * 0.28;
-          const localP = Math.max(0, Math.min(1, (baseProgress - waveDelay) / (1 - waveDelay)));
-          // Плавное замедление в конце (easeOutCubic)
-          const eased = 1 - Math.pow(1 - localP, 3);
-          const inv = 1 - eased;
-
-          const tx = (item.off.x * inv).toFixed(1);
-          const ty = (item.off.y * inv).toFixed(1);
-          const rot = (item.off.r * inv).toFixed(1);
-
-          item.el.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${rot}deg)`;
-          item.el.style.opacity = (0.12 + 0.88 * eased).toFixed(2);
-        });
-
-        if (sub) {
-          const subP = Math.max(0, Math.min(1, (baseProgress - 0.35) / 0.65));
-          sub.style.opacity = subP.toFixed(2);
-          sub.style.transform = `translateY(${((1 - subP) * 14).toFixed(1)}px)`;
-        }
-      }
-
-      window.addEventListener('scroll', updateWaveOnScroll, { passive: true });
-      window.addEventListener('resize', updateWaveOnScroll, { passive: true });
-      updateWaveOnScroll();
-    })();
-  </script>
+  
 </div>
 
 </div>
