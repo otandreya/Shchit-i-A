@@ -1,0 +1,146 @@
+/* Светлая читаемая тема только для страницы со статьёй */
+body.article-page {
+  background-color: #f1f5f9 !important;
+  background-image: none !important;
+  color: #1e293b !important;
+}
+
+body.article-page::before {
+  display: none !important;
+}
+
+.article-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0284c7;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.article-back-link:hover {
+  color: #0369a1;
+  transform: translateX(-3px);
+}
+
+/* Белый «лист» статьи с чёткой типографикой */
+.article-sheet {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 40px 48px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+  color: #1e293b;
+  font-family: 'Manrope', sans-serif;
+  line-height: 1.75;
+}
+
+@media (max-width: 640px) {
+  .article-sheet {
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+}
+
+.article-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #0284c7;
+  background: #e0f2fe;
+  border: 1px solid #bae6fd;
+  margin-bottom: 16px;
+}
+
+.article-sheet h1 {
+  font-size: clamp(24px, 3.6vw, 36px);
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+  margin: 0 0 20px 0;
+}
+
+.article-lead {
+  font-size: 17px;
+  color: #334155;
+  margin: 0 0 28px 0;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.article-sheet h2 {
+  font-size: clamp(20px, 2.5vw, 25px);
+  font-weight: 800;
+  color: #0f172a;
+  margin: 32px 0 14px 0;
+  line-height: 1.3;
+}
+
+.article-sheet p {
+  font-size: 16px;
+  color: #334155;
+  margin: 0 0 16px 0;
+}
+
+.article-sheet strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* Аккуратные светлые карточки видов охраны */
+.article-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px 0 28px 0;
+}
+
+.article-card-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #0284c7;
+  border-radius: 14px;
+  padding: 20px 24px;
+}
+
+.article-card-item h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0284c7;
+  margin: 0 0 8px 0;
+}
+
+.article-card-item p {
+  font-size: 15px;
+  color: #334155;
+  margin: 0;
+  line-height: 1.68;
+}
+
+/* Нижняя плашка с призывом к действию */
+.article-cta-box {
+  margin-top: 36px;
+  padding: 24px 28px;
+  border-radius: 16px;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.article-cta-box p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+}
