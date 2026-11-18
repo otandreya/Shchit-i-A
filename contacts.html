@@ -10,6 +10,7 @@
 
     <script src="js/lucide.min.js" defer></script>
     <script src="js/main.js" defer></script>
+	<script src="js/contacts-modal.js" defer></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/contacts.css">
@@ -122,11 +123,20 @@
             </table>
 
             <div class="ct-req-footer">
-                <p>Обслуживаем объекты в г. Улан-Удэ и по всей Республике Бурятия (включая Кабанский и Прибайкальский районы).</p>
-                <a href="index.html#contact" class="ct-btn-corp">Заказать звонок специалиста</a>
+                <p>Обслуживаем объекты в г. Улан-Удэ и по всей Республике Бурятия (включая районы).</p>
+                <button type="button" id="ct-open-call-btn" class="ct-btn-corp" style="border:none; cursor:pointer;">
+    Заказать звонок специалиста
+</button>
+
             </div>
         </div>
     </main>
+<div id="ct-modal-bg">
+    <div id="ct-modal-box">
+        <button id="ct-modal-close" type="button" aria-label="Закрыть">✕</button>
+        <slot-contact></slot-contact>
+    </div>
+</div>
 
     <slot-footer></slot-footer>
 </body>
