@@ -270,3 +270,17 @@
     display: none !important;
   }
 }
+@media (max-width: 400px) {
+  .sh-nav-bar {
+    padding: 10px 10px !important;
+    gap: 6px !important;
+  }
+  .sh-brand-logo {
+    font-size: 13.5px !important;
+    gap: 4px !important;
+  }
+  .sh-header-phone {
+    font-size: 10px !important;
+    padding: 3px 5px !important;
+  }
+}

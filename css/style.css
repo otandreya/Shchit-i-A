@@ -198,3 +198,14 @@ body.bg-cyber-grid::before {
     opacity: 0;
   }
 }
+.mosaic-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .hero-mosaic-title {
+    font-size: 28px !important;
+    line-height: 1.25;
+  }
+}

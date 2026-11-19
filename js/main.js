@@ -136,31 +136,41 @@ function initHeroMosaic() {
   let charIndex = 0;
   nodes.forEach((node) => {
     const isAccent = node.nodeType === 1 && node.classList.contains('text-sky-400');
-    const text = node.textContent;
+    const parts = node.textContent.split(/(\s+)/);
 
-    for (const ch of text) {
-      if (ch === ' ') {
+    parts.forEach((part) => {
+      if (!part) return;
+      if (/^\s+$/.test(part)) {
         title.appendChild(document.createTextNode(' '));
-        continue;
+        return;
       }
-      const span = document.createElement('span');
-      span.className = 'mosaic-piece' + (isAccent ? ' is-accent' : '');
-      span.setAttribute('aria-hidden', 'true');
-      span.textContent = ch;
 
-      const rx = Math.round((Math.random() - 0.5) * 2 * spread);
-      const ry = Math.round((Math.random() - 0.5) * 2 * spread);
-      const rr = Math.round((Math.random() - 0.5) * 50);
+      const wordWrap = document.createElement('span');
+      wordWrap.className = 'mosaic-word';
 
-      span.style.setProperty('--mx', rx + 'px');
-      span.style.setProperty('--my', ry + 'px');
-      span.style.setProperty('--mr', rr + 'deg');
-      span.style.transitionDelay = (charIndex * 55) + 'ms';
+      for (const ch of part) {
+        const span = document.createElement('span');
+        span.className = 'mosaic-piece' + (isAccent ? ' is-accent' : '');
+        span.setAttribute('aria-hidden', 'true');
+        span.textContent = ch;
 
-      title.appendChild(span);
-      charIndex++;
-    }
+        const rx = Math.round((Math.random() - 0.5) * 2 * spread);
+        const ry = Math.round((Math.random() - 0.5) * 2 * spread);
+        const rr = Math.round((Math.random() - 0.5) * 50);
+
+        span.style.setProperty('--mx', rx + 'px');
+        span.style.setProperty('--my', ry + 'px');
+        span.style.setProperty('--mr', rr + 'deg');
+        span.style.transitionDelay = (charIndex * 55) + 'ms';
+
+        wordWrap.appendChild(span);
+        charIndex++;
+      }
+
+      title.appendChild(wordWrap);
+    });
   });
+
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
